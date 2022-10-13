@@ -1,0 +1,7 @@
+solve whoStarts
+solve presentation
+solve graphics
+solve heuristic function 
+solve advanced heuristic functions (with holes, e.g. '1101')
+solve whichPlayer function and group it in all the other possible places
+add statistics in a file
