@@ -4,17 +4,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-double evaluateNumber();
 char* base10to3(int i);
 void preparation();
 void printArray(int v[], int n);
 int isSuperPrivileged(char* str, int i);
 int isPrivileged(char* str, int i);
-double sumString(char* str, int n, int m);
+int sumString(char* str, int n, int m);
 int search(char* str, int n, int m, char c);
-double evaluateNumber(char* str);
+int evaluateNumber(char* str);
 // char* extractString(char* str, int n, int m);
-
+char* exchangeOnesAndTwos(char* str);  // exchange the '1' with '2' in the string 'str' and viceversa.
 int main() {
   preparation();
   //  int* v = evaluateNumber();
@@ -34,14 +33,18 @@ int isPrivileged(char* str, int i) {  // return 1 if the i-th component is more 
   return 0;
 }
 
-double sumString(char* str, int n, int m) {
-  double zero = 0.02, incredibleOne = 5, goodOne = 0.2, one = 0.15;
-  double value = 0;
+int sumString(char* str, int n, int m) {
+  // incredibleOne = three consecutive 1s ==> 4-in-a-row (remember we are omiting the centrar character, which is a 1).
+  // goodOne = two consecutive 1s.
+  // one = one isolated 1.
+  // zero = one 0.
+  int zero = 2, incredibleOne = 10000, goodOne = 20, one = 15;  // incredibleOne is 10000 (i.e. sufficiently large) to avoid having problems when adding values in the heuristicFunction.
+  int value = 0;
   for (int i = n; i <= m; i++) {
     if (str[i] == '2') {
       value += 0;
     } else if (str[i] == '1' && isSuperPrivileged(str, i))
-      value += incredibleOne;  // 4-in-a-row
+      return incredibleOne;  // 4-in-a-row
     else if (str[i] == '1' && isPrivileged(str, i))
       value += goodOne;
     else
@@ -66,11 +69,11 @@ int search(char* str, int n, int m, char c) {  // returns the 1 if founded, 0 if
 //   return newStr;
 // }
 
-double evaluateNumber(char* str) {
+int evaluateNumber(char* str) {
   // str = **2 1 ***
   if (str[2] == '2') {
     if (search(str, 3, 5, '2') == 1)
-      return 0;  // this string is 'eliminating'
+      return -10;  // this string is 'eliminating'
     else {
       return sumString(str, 3, 5);
     }
@@ -78,21 +81,21 @@ double evaluateNumber(char* str) {
   // str = *** 1 2**
   if (str[3] == '2') {
     if (search(str, 0, 2, '2') == 1)
-      return 0;  // this string is 'eliminating'
+      return -10;  // this string is 'eliminating'
     else
       return sumString(str, 0, 2);
   }
   // str = *2* 1 ***
   if (str[1] == '2') {
     if (search(str, 3, 4, '2') == 1)
-      return 0;  // this string is 'eliminating'
+      return -10;  // this string is 'eliminating'
     else
       return sumString(str, 2, 5);
   }
   // str = *** 1 *2*
   if (str[4] == '2') {
     if (search(str, 1, 2, '2') == 1)
-      return 0;  // this string is 'eliminating'
+      return -10;  // this string is 'eliminating'
     else
       return sumString(str, 0, 3);
   }
@@ -103,6 +106,13 @@ double evaluateNumber(char* str) {
 void printArray(int v[], int n) {
   for (int i = 0; i < n; i++)
     printf("%i - %d\n", i, v[i]);
+}
+
+char* exchangeOnesAndTwos(char* str) {  // exchange the '1' with '2' in the string 'str' and viceversa.
+  int len = strlen(str);
+  for (int i = 0; i < len; i++)
+    str[i] = (str[i] == '1') ? '2' : ((str[i] == '2') ? '1' : '0');
+  return str;
 }
 
 char* base10to3(int i) {  // i<243
@@ -125,13 +135,13 @@ char* base10to3(int i) {  // i<243
 
 void preparation() {
   char* s;
-  // for (int i = 0; i < 729; i++) {
-  //   s = base10to3(i);
-  //   printf("%s %.4lf\n", s, evaluateNumber(s));
-  // }
   for (int i = 0; i < 729; i++) {
-    s = base10to3(i);
-    printf("%g, ", evaluateNumber(s));
+    s = exchangeOnesAndTwos(base10to3(i));
+    printf("%s %d\n", s, evaluateNumber(s));
   }
-  puts(" ");
+  // for (int i = 0; i < 729; i++) {
+  //   s = exchangeOnesAndTwos(base10to3(i));
+  //   printf("%d, ", evaluateNumber(s));
+  // }
+  // puts(" ");
 }

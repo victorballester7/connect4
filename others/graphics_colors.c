@@ -4,7 +4,7 @@
 #include <graphics.h>  //needed libgraph installed
 #include <stdio.h>
 
-#include "connect4.h"
+//#include "connect4.h"
 
 void drawBoard() {
   int gr = DETECT, gm;
@@ -38,4 +38,8 @@ void drawBoard() {
   }
   getch();
   closegraph();
+}
+
+int main() {
+  drawBoard();
 }

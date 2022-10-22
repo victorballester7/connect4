@@ -30,14 +30,14 @@ int computeColumn(char board[NROWS][NCOLS], int i) {  // computes the i-th colum
   return -1;
 }
 
-int computeRow(char board[NROWS][NCOLS], int i) {  // computes the first empty row in the i-th column that is still not full.
-  int j = computeColumn(board, i), k = NROWS - 1;
-  if (j == -1) return -1;
-  while (board[k][j] != '0') k--;
+int computeRow(char board[NROWS][NCOLS], int col) {  // computes the first empty row in the i-th column that is still not full.
+  int k = NROWS - 1;
+  if (col == -1) return -1;
+  while (k >= 0 && board[k][col] != '0') k--;
   return k;
 }
 
-void doPlay(char board[NROWS][NCOLS], int row, int col, int level) {
+void makePlay(char board[NROWS][NCOLS], int row, int col, int level) {
   if (level % 2 == 0)  // player's turn
     board[row][col] = '2';
   else  // computer's turn
@@ -46,155 +46,140 @@ void doPlay(char board[NROWS][NCOLS], int row, int col, int level) {
 
 Node *createFirstNode(char board[NROWS][NCOLS]) {  // Obs: It seems that is missing a parameter (professor message)
   Node *p = malloc(sizeof(Node));
+  p->level = 0;
   copyBoard(p->board, board);
-  p->n_childs = computeNumChilds(p->board);
-  p->childs = malloc(p->n_childs * sizeof(Node *));
+  p->n_children = computeNumChilds(p->board);
+  p->children = malloc(p->n_children * sizeof(Node *));
   return p;
 }
 
-char whichPlayer(int level) {  // level of the root is 0.
-  if (level % 2 == 0)          // player's turn
-    return '2';
-  else  // computer's turn
-    return '1';
+char whichPlayer(int level) {           // level = level of the tree (keeping in mind that the level of the root is 0).
+  return (level % 2 == 0) ? '2' : '1';  // '2' = player's turn, '1' = computer's turn
 }
 
-Node *createNode(Node *father, int child_index, int child_level) {  // Obs: It seems that is missing a parameter (professor message)
+Node *createNode(Node *father, int child_index) {  // Obs: It seems that is missing a parameter (professor message)
   Node *p = malloc(sizeof(Node));
+  if (p == NULL) {
+    printf("Error allocating memory (node).\n");
+    return p;
+  }
+  p->level = father->level + 1;
   copyBoard(p->board, father->board);
   int col = computeColumn(p->board, child_index);
-  int row = computeRow(p->board, child_index);
-  doPlay(p->board, row, col, child_level);
-  if (child_level < DEPTH && !is4InRow(p->board, col)) {
-    p->n_childs = computeNumChilds(p->board);
-    p->childs = malloc(p->n_childs * sizeof(Node *));
-  } else {  // is leaf
-    p->n_childs = 0;
-    p->childs = NULL;
+  int row = computeRow(p->board, col);
+  makePlay(p->board, row, col, p->level);
+  if (p->level < DEPTH && !is4InRow(p->board, col)) {
+    p->n_children = computeNumChilds(p->board);
+    p->children = malloc(p->n_children * sizeof(Node *));
+    p->value = 0;  // we give a default value of 0 in order to avoid problems.
+    if (p->children == NULL) {
+      printf("Error allocating memory (children).\n");
+      return p;
+    }
+  } else {  // is leaf or there is 4-in-a-row in this play
+    p->n_children = 0;
+    p->children = NULL;
+    // assign  THRESHOLD_PUNCT to p->value if there is 4-in-a-row by the computer
+    // assign -THRESHOLD_PUNCT to p->value if there is 4-in-a-row by the player
+    if (p->level < DEPTH) p->value = THRESHOLD_PUNCT * ((p->level % 2 == 1) ? (1) : (-1));
   }
+
+  // else if (p->level == DEPTH) {  // is leaf or there is 4-in-a-row in this play
+  //   p->n_children = 0;
+  //   p->children = NULL;
+  // }
+
+  // else {  // there is 4-in-a-row.
+  //   // p->value = THRESHOLD_PUNCT;
+  //   p->n_children = 0;
+  //   p->children = NULL;
+  // }
   return p;
 }
 
-void create1Level(Node *father, int child_level) {
-  for (int i = 0; i < father->n_childs; i++)  // Obs: i is the number of the child (in general) not the same as the number of the column to play
-    father->childs[i] = createNode(father, i, child_level);
+void create1Level(Node *father) {                 // create one level of the tree (i.e. including all its nodes)
+  for (int i = 0; i < father->n_children; i++) {  // Obs: i is the number of the child; (in general) not the same as the number of the column to play in.
+    father->children[i] = createNode(father, i);
+    if (father->level >= 1 && (father->children[i]->value == THRESHOLD_PUNCT || father->children[i]->value == -THRESHOLD_PUNCT)) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
+      father->n_children = 1;
+      *(father->children[0]) = *(father->children[i]);
+      for (int j = 1; j <= i; j++) deleteNode(father->children[j]);
+      break;
+    }
+  }
 }
 
-double minimax(Node *p, int p_level) {
-  if (p->n_childs == 0) return heuristicFunction(p->board, whichPlayer(p_level));
-  double m = p->childs[0]->value;
-  for (int i = 1; i < p->n_childs; i++) {
-    if (p_level % 2 == 0)  // player's turn level
-      m = fmax(m, p->childs[i]->value);
+int minimax(Node *p) {  // do the minimax algorithm
+  // static int i = 0;
+  // if (p->n_children == 0) {  // possibly not accessed
+  //   printf("esto es prueba\n");
+  //   return heuristicFunction(p->board, whichPlayer(p->level));
+  // }
+  // i++;
+  // printf("%i-minimaxHoLA\n", i);
+  int m = p->children[0]->value;
+  for (int i = 1; i < p->n_children; i++) {
+    if (p->level % 2 == 0)  // player's turn level
+      m = MAX(m, p->children[i]->value);
     else  // computer's turn level
-      m = fmin(m, p->childs[i]->value);
+      m = MIN(m, p->children[i]->value);
   }
+  // printf("minimax: %d\n", m);
   return m;
 }
 
 // This function supposes that we have just created a root node and its child array has been also created.
-void createTree(Node *p, int p_level) {  // p_level is the level of the node p.
-  // if (p_level == 0) p->value = 444;
-  // printf("hola");
-  create1Level(p, p_level + 1);
-  for (int i = 0; i < p->n_childs; i++) {
-    // printf("child number %i:\n", i);
-    if (p_level + 1 == DEPTH) {
-      p->childs[i]->value = heuristicFunction(p->childs[i]->board, whichPlayer(p_level + 1));
-      // printf("child %i: %lf\n", i, p->childs[i]->value);
-      // printBoard(p->childs[i]->board);
+void createTree(Node *p) {
+  // printf("LEVEL: %i\n", p->level);
+  create1Level(p);
+  // if (p->n_children <= 1) {
+  //   printBoard(p->board);
+  // }
+  for (int i = 0; i < p->n_children; i++) {
+    if (p->children[i]->n_children == 0) {
+      // printf("NumChildren: %i/%i", i, p->n_children);
+      // printf("LEVEL: %i\n", p->level);
+      p->children[i]->value = heuristicFunction(p->children[i]->board);
       continue;
     }  // if a child is a leaf, continue (continue instead of break because we have to assign values on each iteration).
-    createTree(p->childs[i], p_level + 1);
+    createTree(p->children[i]);
   }
-  p->value = minimax(p, p_level);
-  // printf("value father LEVEL %i: %lf\n", p_level, p->value);
+  p->value = minimax(p);
+  delete1Level(p);
 }
 
-int doMinimax(Node *p) {  // returns the best column to play in.
+int makeChoice(Node *p) {  // returns the best column to play in.
   int i = -1;
-  while (fabs(p->value - p->childs[++i]->value) > EPS) continue;
-  return i;
+  while (p->children[++i]->value != p->value) continue;
+  return computeColumn(p->board, i);
 }
 
 void deleteNode(Node *p) {  // delete node p.
-  free(p);
-}
-
-// don't need it
-void delete1Level(Node *father) {  // delete level of the childs of father.
-  for (int i = 0; i < father->n_childs; i++)
-    deleteNode(father->childs[i]);
-}
-
-void deleteTree(Node *p, int p_level) {
-  // for (int i = 0; i < p->n_childs; i++) {
-  //   if (p_level + 1 == DEPTH) {
-  //     delete1Level(p);
-  //     exit(0);
-  //   }  // if it is a leaf, continue.
-  //   deleteTree(p->childs[i], p_level + 1);
+  // if (p->children != 0) {
+  //   free(p->children);
+  //   p->children = NULL;
   // }
-  // delete1Level(p);
-  // if (p_level == 0) deleteNode(p);  // last deleteNode of the root node.
-  for (int i = 0; i < p->n_childs; i++) {
-    if (p_level + 1 == DEPTH) {
-      deleteNode(p->childs[i]);
-      continue;
-    }  // if it is a leaf, continue.
-    deleteTree(p->childs[i], p_level + 1);
-  }
-  deleteNode(p);
+  free(p);
+  p = NULL;
 }
 
-void printTree(Node *p, int p_level) {
-  if (p_level == 0) printf("%g ", p->value);
-  for (int i = 0; i < p->n_childs; i++) {
-    if (p_level + 1 == DEPTH) continue;  // if it is a leaf, continue.
-    printTree(p->childs[i], p_level + 1);
-  }
+void delete1Level(Node *father) {  // delete level of the children of father.
+  for (int i = 0; i < father->n_children; i++)
+    deleteNode(father->children[i]);
 }
+
+// void printTree(Node *p) {
+//   if (p->level == 0) printf("%g ", p->value);
+//   for (int i = 0; i < p->n_children; i++) {
+//     if (p->children[i]->level == DEPTH) continue;  // if it is a leaf, continue.
+//     printTree(p->children[i]);
+//   }
+// }
 
 int computerPlay(char board[NROWS][NCOLS]) {
   Node *root = createFirstNode(board);
-  createTree(root, 0);
-  int choice = doMinimax(root);
-  deleteTree(root, 0);
+  createTree(root);
+  int choice = makeChoice(root);
+  deleteNode(root);
   return choice;
 }
-
-// int main() {
-//   char board[NROWS][NCOLS];
-//   memset(board, '0', NCOLS * NROWS);
-//   printBoard(board);
-//   sleep(1);  // 1 is in seconds
-//   clear();
-//   board[1][3] = '4';
-//   printBoard(board);
-//   return 0;
-// }
-
-// int main() {
-//   // = {{'0', '0', '1', '0'}, {'0', '0', '0', '0'}, {'0', '0', '0', '0'}, {'0', '0', '0', '1'}}
-//   srand(2);  // only once in all the code
-
-//   char matrix[NROWS][NCOLS];
-//   memset(matrix, '0', NROWS * NCOLS);  // initializes to '0' all elements of a matrix.
-//   Node *root = createFirstNode(matrix);
-//   createTree(root, 0);
-//   printTree(root, 0);
-//   printf("%i\n", doMinimax(root));
-//   deleteTree(root, 0);
-//   //  int m = 4, n = 4;
-//   //  doPlay(matrix, 2, 1, 1);
-//   //  doPlay(matrix, 1, 3, 2);
-//   //  for (int i = 0; i < m; i++) {
-//   //    for (int j = 0; j < n; j++) {
-//   //      // if (matrix[i][j] == '0')
-//   //      printf("%c ", matrix[i][j]);
-//   //    }
-//   printf("\n");
-//   //  }
-//   //  printf("%i\n", computeNumChilds(matrix));
-//   return 0;
-// }
