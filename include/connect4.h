@@ -1,8 +1,8 @@
 #ifndef __CONNECT4_H__
 #define __CONNECT4_H__
 
-#define NROWS 5                          // Number of rows of the board
-#define NCOLS 5                          // Number of columns of the board
+#define NROWS 6                          // Number of rows of the board
+#define NCOLS 7                          // Number of columns of the board
 #define THRESHOLD_PUNCT 100 * 4 * NCOLS  // lower bound when doing 4-in-a-row. In each board we can have at most 100 points per string and in total there are 4 * NCOLS strings.
 
 /// @brief Adds a tile of the player 'player' in the column 'col'.

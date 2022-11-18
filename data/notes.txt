@@ -4,4 +4,10 @@ solve graphics
 
 try to change chars with uint8.
 review if there are unused functions.
-implement alpha-beta pruning.
+repassar que les funcions estiguin ben documentades en els headers
+implementar millora de velocitat alpha-beta pruning.
+millorar algortihme a partir de computer vs computer
+
+
+
+M'HE QUEDAT EN SI HE D'IMPLEMENTAR ALGUNA COSA PERQUÈ L'ALFA-BETA PRUNING VAGI MÉS BÉ. ESTAVA PENSANT EN GUARDAR UN VECTOR AMB TOTS ELS VALORS DE LA TIRADA ANTERIOR. ARA PER ARA, L'ALFA BETA PRUNING NO VA BÉ. SI ES VOL JUGAR AMB L'ALTRE, SÍ QUE ES POT PERÒ S'HA DE TREURE LA VARIABLE *v QUE HE POSAT A MOLTES FUNCIONS DE MINIMAX.c. TAMBÉ CONVINDRIA AJUSTAR MILLOR ELS COEFICIENTS DEL MODEL (goodOne,one...)

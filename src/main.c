@@ -37,15 +37,27 @@ int main() {
   // init_pair(1, COLOR_RED, COLOR_BLACK);
   // init_pair(2, COLOR_YELLOW, COLOR_BLACK);
   // init_pair(3, COLOR_BLUE, COLOR_BLACK);
-
-  char i = playGame();
-
-  if (i == '0')
-    printf("DRAW!\n");
-  else if (i == '1')
-    printf("SORRY! YOU'VE LOST!\n");
-  else
-    printf("CONGRATULATIONS! YOU'VE WON!\n");
-  uploadFile(i);
+  int match = 0;
+  // match == 0 --> player vs computer
+  // match == 1 --> computer vs computer
+  char i = playGame(match);  // computer vs computer
+  // char i = playGame(0);  // player vs computer
+  // printf("\n\nplayGame: %i\n\n", i);
+  if (match == 1) {
+    if (i == '0')
+      printf("Winner: draw.\n");
+    else if (i == '1')
+      printf("Winner: old computer.\n");
+    else
+      printf("Winner: new computer.\n");
+  } else {
+    if (i == '0')
+      printf("DRAW!\n");
+    else if (i == '1')
+      printf("SORRY! YOU'VE LOST!\n");
+    else
+      printf("CONGRATULATIONS! YOU'VE WON!\n");
+    uploadFile(i);
+  }
   return 0;
 }

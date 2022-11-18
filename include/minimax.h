@@ -3,7 +3,7 @@
 
 #include "connect4.h"  //doen't matter if you put always first the connect.h
 
-#define DEPTH 2                              // Number of levels on the Minimax algorithm.
+#define DEPTH 6                              // Number of levels on the Minimax algorithm.
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))  // minimum of two values
 #define MAX(X, Y) (((X) < (Y)) ? (Y) : (X))  // maximum of two values
 
@@ -14,7 +14,18 @@ typedef struct node {
   int n_children;            // number of children of the node.
   char board[NROWS][NCOLS];  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
   int value;                 // value assigned to the node for the Minimax algorithm.
+  int alpha;
+  int beta;
 } Node;
+void print1Level(Node *father);
+int *ordering1Level(Node *father);
+
+int nProduct(int n, int times);
+
+/// @brief Creates the tree, does the minimax with the implementation of the alpha-beta pruning and deletes the tree except for the root node.
+/// @param p A node from which start the tree (the root).
+/// @return Returns the value of the node p obtained from the Minimax algorithm.
+int alphaBetaTree(Node *p, int *v);
 
 /// @brief Translates the index of the child into the actual column of the board.
 /// @param board Board of the game.
@@ -22,11 +33,16 @@ typedef struct node {
 /// @return The column of the board corresponding to the child i, or -1 if not founded.
 int computeColumn(char board[NROWS][NCOLS], int i);
 
-/// @brief Searches for the first (in fact the last if they are ordered from 0 to NROWS - 1) empty row in the column 'col'
+/// @brief Searches for the first (in fact the last if they are ordered from 0 to NROWS - 1) empty row in the column 'col'.
 /// @param board Board of the game.
 /// @param col Number of the column.
-/// @return The first (in fact the last if they are ordered from 0 to NROWS - 1) empty row in the column 'col', or -1 if not founded
+/// @return The first (in fact the last if they are ordered from 0 to NROWS - 1) empty row in the column 'col', or -1 if not founded.
 int computeRow(char board[NROWS][NCOLS], int col);
+
+/// @brief The computer does the play.
+/// @param board Board of the game.
+/// @return The column in which the computer wants to play.
+int computerPlay2(char board[NROWS][NCOLS], int *v);
 
 /// @brief The computer does the play.
 /// @param board Board of the game.
@@ -35,7 +51,13 @@ int computerPlay(char board[NROWS][NCOLS]);
 
 /// @brief Creates 1 level of nodes that are children of the node 'father'
 /// @param father A node from which we want to create children.
-void create1Level(Node *father);
+/// @return -1 if there is no 4-in-a-row, and the column (>=0) if it is.
+int create1Level2(Node *father, int *v);
+
+/// @brief Creates 1 level of nodes that are children of the node 'father'
+/// @param father A node from which we want to create children.
+/// @return -1 if there is no 4-in-a-row, and the column (>=0) if it is.
+int create1Level(Node *father);
 
 /// @brief Creates the root node of the tree.
 /// @param board Board of the game.
@@ -50,7 +72,8 @@ Node *createNode(Node *father, int child_index);
 
 /// @brief Create the tree for the Minimax algorithm, does the Minimax algorithm and deletes all the nodes except for the first one.
 /// @param p Node root of the tree.
-void createTree(Node *p);
+/// @return .........
+int createTree(Node *p);
 
 /// @brief Deletes all children of the node 'father'.
 /// @param father  The father of the children to be deleted.
@@ -83,8 +106,5 @@ int makeChoice(Node *p);
 int minimax(Node *p);
 
 char whichPlayer(int level);
-
-// void deleteTree(Node *p);
-// void printTree(Node *p);
 
 #endif
