@@ -1,18 +1,5 @@
 #include "../include/minimax.h"
 
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>  // for sleep() function. In Windows use <windows.h>
-
-// #include "../include/connect4.h"
-
-// #define NROWS 8  // Number of rows of the board
-// #define NCOLS 8  // Number of columns of the board
-// #define DEPTH 2  // Number of levels on the Minimax algorithm.
-// #define EPS 1e-5
-
 void copyBoard(char dest[NROWS][NCOLS], char src[NROWS][NCOLS]) {  // copies the 'dest' board to the 'src' board.
   for (int i = 0; i < NROWS; i++) {
     for (int j = 0; j < NCOLS; j++)
@@ -57,8 +44,8 @@ void makePlay(char board[NROWS][NCOLS], int row, int col, int level) {
 Node *createFirstNode(char board[NROWS][NCOLS]) {  // Obs: It seems that is missing a parameter (professor message)
   Node *p = malloc(sizeof(Node));
   p->level = 0;
-  p->alpha = -THRESHOLD_PUNCT;
-  p->beta = THRESHOLD_PUNCT;
+  p->alpha = -INF;
+  p->beta = INF;
   copyBoard(p->board, board);
   p->n_children = computeNumChilds(p->board);
   p->children = malloc(p->n_children * sizeof(Node *));
@@ -94,9 +81,9 @@ Node *createNode(Node *father, int child_index) {  // Obs: It seems that is miss
   } else {  // is leaf or there is 4-in-a-row in this play
     p->n_children = 0;
     p->children = NULL;
-    // assign  THRESHOLD_PUNCT to p->value if there is 4-in-a-row by the computer
-    // assign -THRESHOLD_PUNCT to p->value if there is 4-in-a-row by the player
-    if (p->level < DEPTH) p->value = THRESHOLD_PUNCT * ((p->level % 2 == 1) ? (1) : (-1));
+    // assign  INF to p->value if there is 4-in-a-row by the computer
+    // assign -INF to p->value if there is 4-in-a-row by the player
+    if (p->level < DEPTH) p->value = INF * ((p->level % 2 == 1) ? (1) : (-1));
   }
 
   // else if (p->level == DEPTH) {  // is leaf or there is 4-in-a-row in this play
@@ -105,7 +92,7 @@ Node *createNode(Node *father, int child_index) {  // Obs: It seems that is miss
   // }
 
   // else {  // there is 4-in-a-row.
-  //   // p->value = THRESHOLD_PUNCT;
+  //   // p->value = INF;
   //   p->n_children = 0;
   //   p->children = NULL;
   // }
@@ -115,18 +102,18 @@ Node *createNode(Node *father, int child_index) {  // Obs: It seems that is miss
 int create1Level(Node *father) {                  // create one level of the tree (i.e. including all its nodes)
   for (int i = 0; i < father->n_children; i++) {  // Obs: i is the number of the child; (in general) not the same as the number of the column to play in.
     father->children[i] = createNode(father, i);
-    // if (father->level >= 1 && (father->children[i]->value == THRESHOLD_PUNCT || father->children[i]->value == -THRESHOLD_PUNCT)) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
+    // if (father->level >= 1 && (father->children[i]->value == INF || father->children[i]->value == -INF)) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
     //   father->n_children = 1;
     //   *(father->children[0]) = *(father->children[i]);
     //   for (int j = 1; j <= i; j++) deleteNode(father->children[j]);
     //   break;
     // }
-    if (father->children[i]->value == THRESHOLD_PUNCT || father->children[i]->value == -THRESHOLD_PUNCT) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
+    if (father->children[i]->value == INF || father->children[i]->value == -INF) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
       if (father->level >= 1) {
         father->n_children = 1;
         *(father->children[0]) = *(father->children[i]);
         for (int j = 1; j <= i; j++) deleteNode(father->children[j]);
-      } else {
+      } else {  // if father->level == 0
         father->n_children = i;
         for (int j = 0; j <= i; j++) deleteNode(father->children[j]);
       }
@@ -139,13 +126,13 @@ int create1Level(Node *father) {                  // create one level of the tre
 int create1Level2(Node *father, int *v) {         // create one level of the tree (i.e. including all its nodes)
   for (int i = 0; i < father->n_children; i++) {  // Obs: i is the number of the child; (in general) not the same as the number of the column to play in.
     father->children[i] = createNode(father, i);
-    // if (father->level >= 1 && (father->children[i]->value == THRESHOLD_PUNCT || father->children[i]->value == -THRESHOLD_PUNCT)) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
+    // if (father->level >= 1 && (father->children[i]->value == INF || father->children[i]->value == -INF)) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
     //   father->n_children = 1;
     //   *(father->children[0]) = *(father->children[i]);
     //   for (int j = 1; j <= i; j++) deleteNode(father->children[j]);
     //   break;
     // }
-    if (father->children[i]->value == THRESHOLD_PUNCT || father->children[i]->value == -THRESHOLD_PUNCT) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
+    if (father->children[i]->value == INF || father->children[i]->value == -INF) {  // if there is 4-in-a-row in some child, don't create more trees and delete its brothers!! But only if the level of the father is greater than 1. Because if not, it may disturb the right column to play in.
       if (father->level >= 1) {
         father->n_children = 1;
         *(father->children[0]) = *(father->children[i]);
@@ -193,18 +180,18 @@ int createTree(Node *p) {
   } else {
     for (int i = 0; i < p->n_children; i++) {
       if (p->children[i]->n_children == 0) {
-        // printf("NumChildren: %i/%i", i, p->n_children);
-        // printf("LEVEL: %i\n", p->level);
-        // printBoard(p->children[i]->board);
         p->children[i]
             ->value = heuristicFunction(p->children[i]->board);
+        // printf("LEVEL: %i.", p->level);
+        // printf("NumChildren: %i/%i. value: %i\n", i, p->n_children, p->children[i]->value);
+        // printBoard(p->children[i]->board);
         continue;
       }  // if a child is a leaf, continue (continue instead of break because we have to assign values on each iteration).
       createTree(p->children[i]);
     }
   }
   p->value = minimax(p);
-  printf("LEVEL %i: value: %i\n", p->level, p->value);
+  // printf("LEVEL %i: value: %i\n", p->level, p->value);
   delete1Level(p);
   if (p->level == 0) return makeChoice(p);
   return 0;  // printf("VALUE LEVEL %i: %i\n", p->level, p->value);
@@ -223,7 +210,7 @@ int createTree(Node *p) {
 //   }
 //   // printf("Hola2\n");
 //   if (p->level % 2 == 0) {  // computer's-play leve, i.e. maximizing level
-//     p->value = -THRESHOLD_PUNCT;
+//     p->value = -INF;
 //     for (int i = 0; i < p->n_children; i++) {
 //       eval = alphaBetaTree(p->children[i]);
 //       p->value = MAX(p->value, eval);
@@ -231,7 +218,7 @@ int createTree(Node *p) {
 //       if (p->beta <= p->alpha) break;  // alpha pruning
 //     }
 //   } else {  // player's-play leve, i.e. minimizing level
-//     p->value = THRESHOLD_PUNCT;
+//     p->value = INF;
 //     for (int i = 0; i < p->n_children; i++) {
 //       eval = alphaBetaTree(p->children[i]);
 //       p->value = MIN(p->value, eval);
@@ -270,7 +257,7 @@ int alphaBetaTree(Node *p, int *v) {
   }
   // printf("Hola2\n");
   if (p->level % 2 == 0) {  // computer's-play leve, i.e. maximizing level
-    p->value = -THRESHOLD_PUNCT;
+    p->value = -INF;
     for (int i = 0; i < p->n_children; i++) {
       eval = alphaBetaTree(p->children[i], v);
       p->value = MAX(p->value, eval);
@@ -278,7 +265,7 @@ int alphaBetaTree(Node *p, int *v) {
       if (p->beta <= p->alpha) break;  // alpha pruning
     }
   } else {  // player's-play leve, i.e. minimizing level
-    p->value = THRESHOLD_PUNCT;
+    p->value = INF;
     for (int i = 0; i < p->n_children; i++) {
       eval = alphaBetaTree(p->children[i], v);
       p->value = MIN(p->value, eval);

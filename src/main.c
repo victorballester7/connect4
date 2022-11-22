@@ -1,13 +1,5 @@
-
-#include <limits.h>
-#include <math.h>
-#include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
 #include "../include/connect4.h"
+#include "../include/evaluation.h"
 #include "../include/minimax.h"
 #include "../include/setup.h"
 
@@ -37,11 +29,12 @@ int main() {
   // init_pair(1, COLOR_RED, COLOR_BLACK);
   // init_pair(2, COLOR_YELLOW, COLOR_BLACK);
   // init_pair(3, COLOR_BLUE, COLOR_BLACK);
+
   int match = 0;
   // match == 0 --> player vs computer
   // match == 1 --> computer vs computer
-  char i = playGame(match);  // computer vs computer
-  // char i = playGame(0);  // player vs computer
+  char i = playGame2(match);  // computer vs computer
+  // char i = playGame2(0);  // player vs computer
   // printf("\n\nplayGame: %i\n\n", i);
   if (match == 1) {
     if (i == '0')

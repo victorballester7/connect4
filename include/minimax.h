@@ -1,9 +1,16 @@
 #ifndef __MINIMAX_H__
 #define __MINIMAX_H__
 
-#include "connect4.h"  //doen't matter if you put always first the connect.h
+// for sleep() function. In Windows use <windows.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>  // for sleep() function. In Windows use <windows.h>
 
-#define DEPTH 6                              // Number of levels on the Minimax algorithm.
+#include "../include/connect4.h"
+
+#define DEPTH 3                              // Number of levels on the Minimax algorithm.
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))  // minimum of two values
 #define MAX(X, Y) (((X) < (Y)) ? (Y) : (X))  // maximum of two values
 
