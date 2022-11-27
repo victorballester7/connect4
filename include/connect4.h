@@ -63,6 +63,8 @@ int evaluateString(char* str, char player);
 
 char* exchangeOnesAndTwos(char* str);
 
+char find4InRow(char board[NROWS][NCOLS], int* row, int* col);
+
 /// @brief Evaluates the actual board.
 /// @param board Board of the game.
 /// @return The mark given to that board.
@@ -92,7 +94,11 @@ char otherPlayer(char player);
 
 /// @brief Does the match.
 /// @return Returns '0' if there is a draw, '1' if the computer wins or '2' if the player wins.
-char playGame2();
+char playGame2(int match);
+
+/// @brief Does the match.
+/// @return Returns '0' if there is a draw, '1' if the computer wins or '2' if the player wins.
+char playGame();
 
 /// @brief Prints the board of the game on the screen.
 /// @param board Board of the game.
@@ -100,12 +106,21 @@ void printBoard(char board[NROWS][NCOLS]);
 
 void printLine(int len);
 
+int isSameTileOnTheLeft(char board[NROWS][NCOLS], int row, int col);
+
+int isSameTileAbove(char board[NROWS][NCOLS], int row, int col);
+
+int isSameTileInTheNW(char board[NROWS][NCOLS], int row, int col);
+
+int isSameTileInTheSW(char board[NROWS][NCOLS], int row, int col);
 // /// @brief
 // /// @param board
 // /// @param row
 // /// @param col
 // /// @return   // print a line of dashes of length 'len'
 // char* removeCenterChar(char* str);
+
+int sum(int v[], size_t n);
 
 /// @brief Converts a string of 6 digits from the set {0, 1, 2} into a number of base 3 (hence, a number between 0 and 728).
 /// @param str String to be converted

@@ -15,14 +15,14 @@ int new_dsq, new_zero, new_one, new_goodOne = 80;
 // int old_dsq = -41, old_zero = 5, old_one = 16, old_goodOne = 39;
 int old_dsq = -11, old_zero = 1, old_one = 40, old_goodOne = 80;
 // int old_dsq = -42, old_one = 40, old_goodOne = 80;
+
 int v_new[730];
 int v_old[730];
 
 int main() {
   // As a start suppose goodOne <= 40.
   // int dsq = -20, zero = 0, one = 30, goodOne = 80;
-  int dsq = 0, zero = 100, one = 10000, goodOne = 1000000;
-  preparation(dsq, zero, one, goodOne);
+  preparation(DSQ_VALUE, ZERO_VALUE, ONE_VALUE, GOODONE_VALUE);
   // char board[NROWS][NCOLS];
   // memset(board, '0', NCOLS * NROWS);
   // // int s;
@@ -58,109 +58,109 @@ int main() {
   return 0;
 }
 
-void computer_iteration2(int old_dsq, int old_zero, int old_one, int old_goodOne) {
-  char p1, p2;
-  int new_one_MIN = 12, new_one_MAX = 30;
-  int new_zero_MIN = 0, new_zero_MAX = 3;
-  int new_dsq_MIN = -20, new_dsq_MAX = -9;
-  int wins_MAX = (new_one_MAX - new_one_MIN) * (new_zero_MAX - new_zero_MIN) * (new_dsq_MAX - new_dsq_MIN);
-  for (int i = new_one_MAX; i > new_one_MIN; i--) {
-    new_one = i;
-    for (int j = new_zero_MIN; j < new_zero_MAX; j++) {
-      new_zero = j;
-      for (new_dsq = new_dsq_MIN; new_dsq < new_dsq_MAX; new_dsq++) {
-        if (wins_MAX < 350) {
-          return;
-        }
-        prepareVector(v_new, new_dsq, new_zero, new_one, new_goodOne);
-        prepareVector(v_old, old_dsq, old_zero, old_one, old_goodOne);
-        // printf("PARTIDA 1: ....................\n");
-        player_comp = '2';
-        p2 = playGame2(1);
-        if (p2 == '2') {
-          wins_MAX--;
-          continue;
-        }
-        player_comp = '1';
-        p1 = playGame2(1);  // if you use this, remember to uncomment function in envaluateString();
-        if (p1 == '2') {
-          wins_MAX--;
-          continue;
-        }
-      }
-    }
-  }
-  printf("old_dsq = %i, old_zero = %i, old_one = %i, old_goodOne = %i\nNumber of wins: %i\n--------------------------\n", old_dsq, old_zero, old_one, old_goodOne, wins_MAX);
-  return;
-}
+// void computer_iteration2(int old_dsq, int old_zero, int old_one, int old_goodOne) {
+//   char p1, p2;
+//   int new_one_MIN = 12, new_one_MAX = 30;
+//   int new_zero_MIN = 0, new_zero_MAX = 3;
+//   int new_dsq_MIN = -20, new_dsq_MAX = -9;
+//   int wins_MAX = (new_one_MAX - new_one_MIN) * (new_zero_MAX - new_zero_MIN) * (new_dsq_MAX - new_dsq_MIN);
+//   for (int i = new_one_MAX; i > new_one_MIN; i--) {
+//     new_one = i;
+//     for (int j = new_zero_MIN; j < new_zero_MAX; j++) {
+//       new_zero = j;
+//       for (new_dsq = new_dsq_MIN; new_dsq < new_dsq_MAX; new_dsq++) {
+//         if (wins_MAX < 350) {
+//           return;
+//         }
+//         prepareVector(v_new, new_dsq, new_zero, new_one, new_goodOne);
+//         prepareVector(v_old, old_dsq, old_zero, old_one, old_goodOne);
+//         // printf("PARTIDA 1: ....................\n");
+//         player_comp = '2';
+//         p2 = playGame2(1);
+//         if (p2 == '2') {
+//           wins_MAX--;
+//           continue;
+//         }
+//         player_comp = '1';
+//         p1 = playGame2(1);  // if you use this, remember to uncomment function in envaluateString();
+//         if (p1 == '2') {
+//           wins_MAX--;
+//           continue;
+//         }
+//       }
+//     }
+//   }
+//   printf("old_dsq = %i, old_zero = %i, old_one = %i, old_goodOne = %i\nNumber of wins: %i\n--------------------------\n", old_dsq, old_zero, old_one, old_goodOne, wins_MAX);
+//   return;
+// }
 
-int computer_iteration(int old_dsq, int old_zero, int old_one, int old_goodOne) {
-  char p1, p2;
-  int count = 0, countloss = 0, countwin = 0;
-  int new_one_MIN = 12, new_one_MAX = 30;
-  int new_zero_MIN = 0, new_zero_MAX = 3;
-  int new_dsq_MIN = -20, new_dsq_MAX = -9;
-  int wins_MAX = (new_one_MAX - new_one_MIN) * (new_zero_MAX - new_zero_MIN) * (new_dsq_MAX - new_dsq_MIN);
-  for (int i = new_one_MAX; i > new_one_MIN; i--) {
-    new_one = i;
-    // printf("new_one: %i\n", new_one);
-    for (int j = new_zero_MIN; j < new_zero_MAX; j++) {
-      new_zero = j;
-      for (new_dsq = new_dsq_MIN; new_dsq < new_dsq_MAX; new_dsq++) {
-        if (wins_MAX < 600) {
-          return 0;
-        }
-        // if (wins_MAX < 1446) return 0;
-        prepareVector(v_new, new_dsq, new_zero, new_one, new_goodOne);
-        prepareVector(v_old, old_dsq, old_zero, old_one, old_goodOne);
-        // printf("PARTIDA 1: ....................\n");
-        player_comp = '2';
-        p2 = playGame2(1);
-        if (p2 == '2') {
-          wins_MAX--;
-          continue;
-        }
-        player_comp = '1';
-        p1 = playGame2(1);  // if you use this, remember to uncomment function in envaluateString();
-        // printf("PARTIDA 2: ....................\n");
-        if (p1 == '2') {
-          wins_MAX--;
-          continue;
-        }
-        // if ((p1 == '1' && p2 == '2') || (p1 == '2' && p2 == '1')) {
-        //   count++;
-        //   // // printf("%i %i\n", new_one, new_goodOne);
-        //   // printf("Winner with paramters dsq = %i, one = %i, goodOne = %i: %c\n", new_dsq, new_one, new_goodOne, p1);
-        //   // // old_dsq = new_dsq;
-        //   // // old_one = new_one;
-        //   // // old_goodOne = new_goodOne;
-        // } else if (p1 == '2' && p2 == '2') {
-        //   printf("Lost against paramters dsq = %i, zero = %i, one = %i, goodOne = %i.\n", new_dsq, new_zero, new_one, new_goodOne);
-        //   countloss++;
-        // } else {
-        //   // printf("%i %i\n", new_one, new_goodOne);
-        //   // old_dsq = new_dsq;
-        //   // old_one = new_one;
-        //   // old_goodOne = new_goodOne;
-        //   countwin++;
-        // }
-        // printf("--------------------\n-------------------\n--------------------\n");
-      }
-    }
-  }
-  // printf("old_dsq = %i, old_zero = %i, old_one = %i, old_goodOne = %i\nNumber of draws: %i, Losses: %i, Wins: %i, Difference (wins - losses): %i,\n--------------------------\n", old_dsq, old_zero, old_one, old_goodOne, count, countloss, countwin, countwin - countloss);
-  printf("old_dsq = %i, old_zero = %i, old_one = %i, old_goodOne = %i\nNumber of wins: %i\n--------------------------\n", old_dsq, old_zero, old_one, old_goodOne, wins_MAX);
+// int computer_iteration(int old_dsq, int old_zero, int old_one, int old_goodOne) {
+//   char p1, p2;
+//   int count = 0, countloss = 0, countwin = 0;
+//   int new_one_MIN = 12, new_one_MAX = 30;
+//   int new_zero_MIN = 0, new_zero_MAX = 3;
+//   int new_dsq_MIN = -20, new_dsq_MAX = -9;
+//   int wins_MAX = (new_one_MAX - new_one_MIN) * (new_zero_MAX - new_zero_MIN) * (new_dsq_MAX - new_dsq_MIN);
+//   for (int i = new_one_MAX; i > new_one_MIN; i--) {
+//     new_one = i;
+//     // printf("new_one: %i\n", new_one);
+//     for (int j = new_zero_MIN; j < new_zero_MAX; j++) {
+//       new_zero = j;
+//       for (new_dsq = new_dsq_MIN; new_dsq < new_dsq_MAX; new_dsq++) {
+//         if (wins_MAX < 600) {
+//           return 0;
+//         }
+//         // if (wins_MAX < 1446) return 0;
+//         prepareVector(v_new, new_dsq, new_zero, new_one, new_goodOne);
+//         prepareVector(v_old, old_dsq, old_zero, old_one, old_goodOne);
+//         // printf("PARTIDA 1: ....................\n");
+//         player_comp = '2';
+//         p2 = playGame2(1);
+//         if (p2 == '2') {
+//           wins_MAX--;
+//           continue;
+//         }
+//         player_comp = '1';
+//         p1 = playGame2(1);  // if you use this, remember to uncomment function in envaluateString();
+//         // printf("PARTIDA 2: ....................\n");
+//         if (p1 == '2') {
+//           wins_MAX--;
+//           continue;
+//         }
+//         // if ((p1 == '1' && p2 == '2') || (p1 == '2' && p2 == '1')) {
+//         //   count++;
+//         //   // // printf("%i %i\n", new_one, new_goodOne);
+//         //   // printf("Winner with paramters dsq = %i, one = %i, goodOne = %i: %c\n", new_dsq, new_one, new_goodOne, p1);
+//         //   // // old_dsq = new_dsq;
+//         //   // // old_one = new_one;
+//         //   // // old_goodOne = new_goodOne;
+//         // } else if (p1 == '2' && p2 == '2') {
+//         //   printf("Lost against paramters dsq = %i, zero = %i, one = %i, goodOne = %i.\n", new_dsq, new_zero, new_one, new_goodOne);
+//         //   countloss++;
+//         // } else {
+//         //   // printf("%i %i\n", new_one, new_goodOne);
+//         //   // old_dsq = new_dsq;
+//         //   // old_one = new_one;
+//         //   // old_goodOne = new_goodOne;
+//         //   countwin++;
+//         // }
+//         // printf("--------------------\n-------------------\n--------------------\n");
+//       }
+//     }
+//   }
+//   // printf("old_dsq = %i, old_zero = %i, old_one = %i, old_goodOne = %i\nNumber of draws: %i, Losses: %i, Wins: %i, Difference (wins - losses): %i,\n--------------------------\n", old_dsq, old_zero, old_one, old_goodOne, count, countloss, countwin, countwin - countloss);
+//   printf("old_dsq = %i, old_zero = %i, old_one = %i, old_goodOne = %i\nNumber of wins: %i\n--------------------------\n", old_dsq, old_zero, old_one, old_goodOne, wins_MAX);
 
-  // prepareVector(v_new, -27, 1, 20, 80);
-  // prepareVector(v_old, old_dsq, old_zero, old_one, old_goodOne);
-  // printf("PARTIDA 1: ....................\n");
-  // player_comp = '1';
-  // p1 = playGame2(1);  // if you use this, remember to uncomment function in envaluateString();
-  // printf("PARTIDA 2: ....................\n");
-  // player_comp = '2';
-  // p2 = playGame2(1);
-  return 0;
-}
+//   // prepareVector(v_new, -27, 1, 20, 80);
+//   // prepareVector(v_old, old_dsq, old_zero, old_one, old_goodOne);
+//   // printf("PARTIDA 1: ....................\n");
+//   // player_comp = '1';
+//   // p1 = playGame2(1);  // if you use this, remember to uncomment function in envaluateString();
+//   // printf("PARTIDA 2: ....................\n");
+//   // player_comp = '2';
+//   // p2 = playGame2(1);
+//   return 0;
+// }
 
 // int isSuperPrivileged(char* str, int i) {  // return 1 if the i-th component is more important than normal
 //   int len = strlen(str);
@@ -275,7 +275,7 @@ int evaluateNumber(char* str, int dsq, int zero, int one, int goodOne) {
   } else if (count_one > 0) {
     return one + (count_one - 2) * one;  // 2 <= count_one <= 4
   } else
-    return zero + (count_zero - 2) * zero;  // 2 <= count_zero <= 6
+    return zero + (count_zero - 3) * zero;  // 3 <= count_zero <= 6
 }
 
 void printArray(int v[], int n) {

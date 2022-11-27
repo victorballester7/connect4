@@ -24,6 +24,7 @@ typedef struct node {
   int alpha;
   int beta;
 } Node;
+
 void print1Level(Node *father);
 int *ordering1Level(Node *father);
 
@@ -32,7 +33,7 @@ int nProduct(int n, int times);
 /// @brief Creates the tree, does the minimax with the implementation of the alpha-beta pruning and deletes the tree except for the root node.
 /// @param p A node from which start the tree (the root).
 /// @return Returns the value of the node p obtained from the Minimax algorithm.
-int alphaBetaTree(Node *p, int *v);
+int alphaBetaTree(Node *p);
 
 /// @brief Translates the index of the child into the actual column of the board.
 /// @param board Board of the game.
@@ -49,17 +50,7 @@ int computeRow(char board[NROWS][NCOLS], int col);
 /// @brief The computer does the play.
 /// @param board Board of the game.
 /// @return The column in which the computer wants to play.
-int computerPlay2(char board[NROWS][NCOLS], int *v);
-
-/// @brief The computer does the play.
-/// @param board Board of the game.
-/// @return The column in which the computer wants to play.
 int computerPlay(char board[NROWS][NCOLS]);
-
-/// @brief Creates 1 level of nodes that are children of the node 'father'
-/// @param father A node from which we want to create children.
-/// @return -1 if there is no 4-in-a-row, and the column (>=0) if it is.
-int create1Level2(Node *father, int *v);
 
 /// @brief Creates 1 level of nodes that are children of the node 'father'
 /// @param father A node from which we want to create children.

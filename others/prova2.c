@@ -1,11 +1,8 @@
 #define _GNU_SOURCE
-#include <menu.h>
+#include <locale.h>
 #include <ncurses.h>
 #include <stdio.h>
-#include <stdlib.h>  // added for exit() function
-#include <string.h>
-#include <sys/types.h>
-
+#include <stdlib.h>
 // void fail(char *msg) {
 //   endwin();
 //   puts(msg);
@@ -18,30 +15,26 @@
 //   return result;
 // }
 
-void uploadFile() {
-  FILE* fp;
-  char* fileName = "resources/logo1.txt";
-  size_t size;
-  ssize_t nread;
-  char* line;
-  fp = fopen(fileName, "r");
-  if (fp == NULL) {
-    printf("Error opening the file. Exiting.\n");
-    return;
-  }
-  char s[500];
-  // printf("%s", s);
-  while (fgets(s, sizeof(s), fp)) {
-    printf("%s", s);
-  }
+// int sum(int v[], size_t n) {
+//   int sum = 0;
+//   for (int i = 0; i < n; i++) sum += v[i];
+//   return sum;
+// }
 
-  // while ((nread = getline(&line, &size, fp)) != -1) {
-  //   printf("%s", line);
-  // }
-  fclose(fp);
-}
 int main() {
-  /* Commandline argument currently unused */
-  // printf("%d %d %d\n", nProduct(0, 10), nProduct(2, 0), nProduct(3, 3));
-  uploadFile();
+  // char board[NROWS][NCOLS] = {
+  //     {'0', '0', '0', '0', '0', '0', '0'},
+  //     {'0', '0', '0', '0', '0', '0', '0'},
+  //     {'0', '0', '0', '0', '0', '0', '0'},
+  //     {'0', '0', '0', '0', '2', '0', '0'},
+  //     {'0', '0', '0', '1', '1', '0', '0'},
+  //     {'1', '0', '0', '2', '2', '2', '0'}};
+  // printBoard(board);
+  // printf("%d\n", heuristicFunction(board));
+  // setlocale(LC_ALL, "");
+  // initscr();  // start ncurses mode.
+  // clear();    // clear screen.
+  // noecho();   // Don't echo() while doing getch().
+  // cbreak();   // Line buffering disabled. pass on everything.
+  printf("Num of cols: %i\n Num of rows: %i", COLS, LINES);
 }

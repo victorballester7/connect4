@@ -14,7 +14,10 @@ void uploadFile(char i) {
   char* fileName = fileNameCreation();
   fp = fopen(fileName, "r+");
   if (fp == NULL) {
-    printf("Error opening the file. Exiting.\n");
+    // clearFirstLines(1);
+    attron(COLOR_PAIR(9));
+    mvprintw(1, 0, "Error opening the file. The new data cannot be uploaded to the file.");
+    attroff(COLOR_PAIR(9));
     return;
   }
   int played, won, lost, tied;
@@ -26,6 +29,12 @@ void uploadFile(char i) {
   fclose(fp);
   free(fileName);
   fileName = NULL;
+}
+
+void topRowComment() {
+  clearFirstLines(1);
+  mvprintw(0, 0, "Use arrow keys to go up and down. Press enter to select a choice.");  // printf in the abstract window
+  refresh();                                                                            // Print it on to the real screen
 }
 
 int presentation() {
@@ -63,6 +72,70 @@ int presentation() {
   } while (choice == 2);
 }
 
+void clearFirstLines(int n) {
+  for (int i = 0; i < n; i++) {
+    move(i, 0);
+    clrtoeol();  // clear until the end of the line.
+  }
+}
+
+void blinking(int startRow, int startCol, char direction, int color) {
+  int blink_counter = 0;
+  while (blink_counter++ < 2 * BLINKING_TIMES + 1) {
+    if (direction == 'h') {
+      for (int i = 0; i < 4; i++) {
+        if (blink_counter % 2 == 0)
+          drawTile(startRow, startCol + i, 7);  // 7 = BLACK
+        else
+          drawTile(startRow, startCol + i, color);
+      }
+    } else if (direction == 'v') {
+      for (int i = 0; i < 4; i++) {
+        if (blink_counter % 2 == 0)
+          drawTile(startRow + i, startCol, 7);  // 7 = BLACK
+        else
+          drawTile(startRow + i, startCol, color);
+      }
+    } else if (direction == 'd') {
+      for (int i = 0; i < 4; i++) {
+        if (blink_counter % 2 == 0)
+          drawTile(startRow + i, startCol + i, 7);  // 7 = BLACK
+        else
+          drawTile(startRow + i, startCol + i, color);
+      }
+    } else {  // else if (direction == 'D')
+      for (int i = 0; i < 4; i++) {
+        if (blink_counter % 2 == 0)
+          drawTile(startRow - i, startCol + i, 7);  // 7 = BLACK
+        else
+          drawTile(startRow - i, startCol + i, color);
+      }
+    }
+    refresh();
+    usleep(BLINKING_INTERVAL);
+  }
+}
+
+int endOfGame(char winner, int startRow, int startCol, char direction) {
+  char* s = malloc(30 * sizeof(char));
+  if (winner == '0')
+    s = "DRAW!";
+  else if (winner == '1')
+    s = "SORRY! YOU'VE LOST!";
+  else
+    s = "CONGRATULATIONS! YOU'VE WON!";
+  mvprintw(STARTBOARD_Y - 3, (TERMINAL_WIDTH - strlen(s)) / 2, "%s", s);
+  refresh();
+
+  // blinking
+  if (winner == '1' || winner == '2') {
+    int color = (winner == '1') ? colorComputer : colorPlayer;
+    blinking(startRow, startCol, direction, color);
+  }
+  topRowComment();
+  return movementMenu(NULL, printEndingMenu);
+}
+
 int supportsColors() {
   if (has_colors() == FALSE) {
     endwin();
@@ -70,12 +143,22 @@ int supportsColors() {
     return 0;
   }
   start_color(); /* Start color 			*/
-  init_pair(1, COLOR_RED, COLOR_BLACK);
-  init_pair(2, COLOR_GREEN, COLOR_BLACK);
-  init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-  init_pair(4, COLOR_BLUE, COLOR_BLACK);
-  init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
-  init_pair(6, COLOR_CYAN, COLOR_BLACK);
+  // init_pair(1, COLOR_RED, COLOR_BLACK);
+  // init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  // init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+  // init_pair(4, COLOR_BLUE, COLOR_BLACK);
+  // init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+  // init_pair(6, COLOR_CYAN, COLOR_BLACK);
+  // First color is the foreground color (e.g. for the text). The second one is the background color.
+  init_pair(1, COLOR_RED, COLOR_RED);
+  init_pair(2, COLOR_GREEN, COLOR_GREEN);
+  init_pair(3, COLOR_YELLOW, COLOR_YELLOW);
+  init_pair(4, COLOR_WHITE, COLOR_WHITE);
+  init_pair(5, COLOR_MAGENTA, COLOR_MAGENTA);
+  init_pair(6, COLOR_CYAN, COLOR_CYAN);
+  init_pair(7, COLOR_BLACK, COLOR_BLACK);
+  init_pair(8, COLOR_BLUE, COLOR_BLUE);
+  init_pair(9, COLOR_RED, COLOR_BLACK);  // For errors
   return 1;
 }
 
@@ -97,7 +180,10 @@ void numRowsAndCols(FILE* fp, int* nrows, int* ncols) {
 void printLogo(char* filename, int centerCol) {
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
-    printf("Error opening the file. Exiting.\n");
+    // clearFirstLines(1);
+    attron(COLOR_PAIR(9));
+    mvprintw(1, 0, "Error opening the file. The logo cannot be shown.");
+    attroff(COLOR_PAIR(9));
     return;
   }
   char line[500];
@@ -142,10 +228,127 @@ void destroy_win(WINDOW* localWin) {
   delwin(localWin);
 }
 
-void drawBoard() {
+void drawTile(int row, int col, int color) {
+  int startX = STARTBOARD_X + 1 + (INNERSPACE_X + 1) * col;
+  int startY = STARTBOARD_Y + 1 + (INNERSPACE_Y + 1) * row;
+  attron(COLOR_PAIR(color));  // change color to COLOR_PAIR(color) ACTIVATED
+  for (int i = 0; i < INNERSPACE_Y; i++) {
+    for (int j = 0; j < INNERSPACE_X; j++)
+      mvprintw(startY + i, startX + j, " ");
+  }
+  attroff(COLOR_PAIR(color));  // change color to COLOR_PAIR (color) DEACTIVATED
 }
 
-char** printMenu(WINDOW* menu_win, int highlight, int* n_choices) {
+void drawBoard() {
+  // horizontal lines
+  attron(COLOR_PAIR(8));
+  for (int i = 0; i <= NROWS; i++) {
+    if (i == 0)
+      mvprintw(STARTBOARD_Y, STARTBOARD_X, "\u250F");  // Upper left corner
+    else if (i == NROWS)
+      mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * NROWS, STARTBOARD_X, "\u2517");  // Lower left corner
+    else
+      mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i, STARTBOARD_X, "\u2523");  // Middle left corner
+    for (int j = 0; j < NCOLS; j++) {
+      if (i == 0 && j >= 1)
+        mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i, STARTBOARD_X + (INNERSPACE_X + 1) * j, "\u2533");  // Middle top corner
+      else if (i == NROWS && j >= 1)
+        mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i, STARTBOARD_X + (INNERSPACE_X + 1) * j, "\u253B");  // Middle bottom corner
+      else if (j >= 1)
+        mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i, STARTBOARD_X + (INNERSPACE_X + 1) * j, "\u254B");  // Middle middle corner
+
+      for (int k = 1; k <= INNERSPACE_X; k++)
+        mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i, STARTBOARD_X + (INNERSPACE_X + 1) * j + k, "\u2501");
+    }
+    if (i == 0)
+      mvprintw(STARTBOARD_Y, STARTBOARD_X + (INNERSPACE_X + 1) * NCOLS, "\u2513");  // Upper right corner
+    else if (i == NROWS)
+      mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * NROWS, STARTBOARD_X + (INNERSPACE_X + 1) * NCOLS, "\u251B");  // Lower right corner
+    else
+      mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i, STARTBOARD_X + (INNERSPACE_X + 1) * NCOLS, "\u252B");  // Middle right corner
+  }
+  // vertical lines
+  for (int i = 0; i < NROWS; i++) {
+    for (int j = 0; j <= NCOLS; j++) {
+      for (int k = 1; k <= INNERSPACE_Y; k++)
+        mvprintw(STARTBOARD_Y + (INNERSPACE_Y + 1) * i + k, STARTBOARD_X + (INNERSPACE_X + 1) * j, "\u2503");
+    }
+  }
+  attroff(COLOR_PAIR(8));
+  refresh();
+}
+
+char** printWhoStarts(WINDOW* menu_win, int highlight, int* n_choices) {
+  *n_choices = 2;
+  char** choices = malloc((*n_choices) * sizeof(char*));
+  choices[0] = "Yes";
+  choices[1] = "No";
+
+  int col = 0, row = 0;
+  char s[22] = "Do you want to start?";
+  mvprintw(row, col, "%s", s);  // print current option in the abstract window
+  col += strlen(s) + 2;
+
+  for (int i = 0; i < *n_choices; i++, row++) {
+    if (highlight == i + 1) {                // Highlight the present choice
+      attron(A_REVERSE);                     // reverse color font and background font ACTIVATED
+      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
+      attroff(A_REVERSE);                    // reverse color font and background font DEACTIVATED
+    } else
+      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
+  }
+  return choices;
+}
+
+char** printEndingMenu(WINDOW* menu_win, int highlight, int* n_choices) {
+  *n_choices = 3;
+  char** choices = malloc((*n_choices) * sizeof(char*));
+  choices[0] = "Play again";
+  choices[1] = "Return to the main menu";
+  choices[2] = "Exit";
+
+  int col = 0, row = STARTBOARD_Y + NROWS * (INNERSPACE_Y + 1) + 2;
+  char s[28] = "What do you want to do now?";
+  mvprintw(row, col, "%s", s);  // print current option in the abstract window
+  col += strlen(s) + 2;
+
+  for (int i = 0; i < *n_choices; i++, row++) {
+    if (highlight == i + 1) {                // Highlight the present choice
+      attron(A_REVERSE);                     // reverse color font and background font ACTIVATED
+      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
+      attroff(A_REVERSE);                    // reverse color font and background font DEACTIVATED
+    } else
+      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
+  }
+  return choices;
+}
+
+char** printTilesReadyToPlay(WINDOW* menu_win, int highlight, int* n_choices) {
+  *n_choices = NCOLS;
+  char** choices = malloc((*n_choices) * sizeof(char*));
+  for (int i = 0; i < *n_choices; i++) {
+    choices[i] = malloc((INNERSPACE_X + 1) * sizeof(char));
+    for (int j = 0; j < INNERSPACE_X; j++)
+      choices[i][j] = ' ';
+    choices[i][INNERSPACE_X] = '\0';
+    // choices[i] = "aaa";
+  }
+  int startX = STARTBOARD_X + 1;
+  for (int i = 0; i < *n_choices; i++, startX++) {
+    if (highlight == i + 1) {                                                   // Highlight the present choice
+      attron(COLOR_PAIR(colorPlayer));                                          // change color to COLOR_PAIR(i+1) ACTIVATED
+      mvprintw(STARTBOARD_Y - 1, startX + INNERSPACE_X * i, "%s", choices[i]);  // print the tiles
+      attroff(COLOR_PAIR(colorPlayer));                                         // change color to COLOR_PAIR(i+1) DEACTIVATED
+    } else {
+      attron(COLOR_PAIR(7));                                                    // change color to COLOR_PAIR(i+1) ACTIVATED
+      mvprintw(STARTBOARD_Y - 1, startX + INNERSPACE_X * i, "%s", choices[i]);  // print the tiles
+      attroff(COLOR_PAIR(7));                                                   // change color to COLOR_PAIR(i+1) DEACTIVATED
+    }
+  }
+  return choices;
+}
+
+char** printMainMenu(WINDOW* menu_win, int highlight, int* n_choices) {
   *n_choices = 4;
   char** choices = malloc((*n_choices) * sizeof(char*));
   choices[0] = "Play";
@@ -163,15 +366,16 @@ char** printMenu(WINDOW* menu_win, int highlight, int* n_choices) {
     } else
       mvwprintw(menu_win, row, col, "%s", choices[i]);  // print current option in the abstract window
   }
-  mvwprintw(menu_win, HEIGHT - 3, WIDTH - 27 - 1, "Current player's tile:");
-  wattron(menu_win, COLOR_PAIR(colorPlayer));            // change color to COLOR_PAIR(i+1) ACTIVATED
-  mvwprintw(menu_win, HEIGHT - 3, WIDTH - 2, "\u25CF");  // print the tiles
-  wattroff(menu_win, COLOR_PAIR(colorPlayer));           // change color to COLOR_PAIR(i+1) DEACTIVATED
-  mvwprintw(menu_win, HEIGHT - 2, WIDTH - 27 - 1, "Current computer's tile:");
-  wattron(menu_win, COLOR_PAIR(colorComputer));          // change color to COLOR_PAIR(i+1) ACTIVATED
-  mvwprintw(menu_win, HEIGHT - 2, WIDTH - 2, "\u25CF");  // print the tiles
-  wattroff(menu_win, COLOR_PAIR(colorComputer));         // change color to COLOR_PAIR(i+1) DEACTIVATED
-  wrefresh(menu_win);                                    // print the menu in the real screen
+  mvwprintw(menu_win, HEIGHT - 3, WIDTH - 27 - INNERSPACE_X, "Current player's tile:");
+  wattron(menu_win, COLOR_PAIR(colorPlayer));                                 // change color to COLOR_PAIR(i+1) ACTIVATED
+  mvwhline(menu_win, HEIGHT - 3, WIDTH - INNERSPACE_X - 1, 0, INNERSPACE_X);  // print the tiles
+  // mvwprintw(menu_win, HEIGHT - 3, WIDTH - INNERSPACE_X - 1, "   ");     // print the tiles
+  wattroff(menu_win, COLOR_PAIR(colorPlayer));  // change color to COLOR_PAIR(i+1) DEACTIVATED
+  mvwprintw(menu_win, HEIGHT - 2, WIDTH - 27 - INNERSPACE_X, "Current computer's tile:");
+  wattron(menu_win, COLOR_PAIR(colorComputer));                               // change color to COLOR_PAIR(i+1) ACTIVATED
+  mvwhline(menu_win, HEIGHT - 2, WIDTH - INNERSPACE_X - 1, 0, INNERSPACE_X);  // print the tiles
+  wattroff(menu_win, COLOR_PAIR(colorComputer));                              // change color to COLOR_PAIR(i+1) DEACTIVATED
+  wrefresh(menu_win);                                                         // print the menu in the real screen
   return choices;
 }
 
@@ -183,7 +387,10 @@ char** printStats(WINDOW* menu_win, int highlight, int* n_choices) {
   char filename[30] = "data/statistics.txt";
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
-    printf("Error opening the file. Exiting.\n");
+    clearFirstLines(2);
+    attron(COLOR_PAIR(9));
+    mvprintw(0, 0, "Error opening the file. The statistics cannot be shown properly. Press Enter to continue.");
+    attroff(COLOR_PAIR(9));
     return NULL;
   }
   int played, won, lost, tied;
@@ -223,7 +430,7 @@ char** printColors(WINDOW* menu_win, int highlight, int* n_choices, int col_extr
   choices[0] = "Red:";
   choices[1] = "Green:";
   choices[2] = "Yellow:";
-  choices[3] = "Blue:";
+  choices[3] = "White:";
   choices[4] = "Magenta:";
   choices[5] = "Cyan:";
 
@@ -237,7 +444,7 @@ char** printColors(WINDOW* menu_win, int highlight, int* n_choices, int col_extr
     } else
       mvwprintw(menu_win, row, col + col_extra, "%s", choices[i]);  // print current option in the abstract window
     wattron(menu_win, COLOR_PAIR(i + 1));                           // change color to COLOR_PAIR(i+1) ACTIVATED
-    mvwprintw(menu_win, row, maxCol + col_extra, "\u25CF");         // print the tiles
+    mvwhline(menu_win, row, maxCol + col_extra, 0, INNERSPACE_X);   // print the tiles
     wattroff(menu_win, COLOR_PAIR(i + 1));                          // change color to COLOR_PAIR(i+1) DEACTIVATED
   }
   wrefresh(menu_win);  // print the menu in the real screen
@@ -246,18 +453,24 @@ char** printColors(WINDOW* menu_win, int highlight, int* n_choices, int col_extr
 
 int movementMenu(WINDOW* menu_win, char** printMenu(WINDOW*, int, int*)) {
   int choice = 0, highlight = 1, c, n_choices;
-  if (printMenu == printSettingsP2 && colorPlayer == 1) highlight = 2;
+  if (printMenu == printSettingsP2 && colorPlayer == 1)
+    highlight = 2;
+  else if (printMenu == printTilesReadyToPlay)
+    highlight = NCOLS / 2 + 1;
   char** choices = printMenu(menu_win, highlight, &n_choices);
+  refresh();
   while (true) {
-    c = wgetch(menu_win);
+    c = (menu_win == NULL) ? getch() : wgetch(menu_win);
     switch (c) {
       case KEY_UP:
+      case KEY_LEFT:
         if (highlight == 1)
           highlight = n_choices;
         else
           highlight--;
         break;
       case KEY_DOWN:
+      case KEY_RIGHT:
         if (highlight == n_choices)
           highlight = 1;
         else
@@ -280,10 +493,13 @@ int movementMenu(WINDOW* menu_win, char** printMenu(WINDOW*, int, int*)) {
     printMenu(menu_win, highlight, &n_choices);
     if (choice != 0) break;  // User did a choice come out of the infinite loop
   }
-  if (printMenu != printSettingsP1) {
-    wclear(menu_win);    // clear all content on the window
-    wrefresh(menu_win);  // print the menu in the real screen
-  }
+
+  if (printMenu != printSettingsP1) wclean(menu_win);
   free(choices);
   return choice;
+}
+
+void wclean(WINDOW* menu_win) {
+  wclear(menu_win);    // clear all content on the window
+  wrefresh(menu_win);  // print the menu in the real screen
 }

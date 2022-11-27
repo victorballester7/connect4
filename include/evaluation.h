@@ -1,6 +1,11 @@
 #ifndef __EVALUATION_H__
 #define __EVALUATION_H__
 
+#define DSQ_VALUE -10000
+#define ZERO_VALUE 100
+#define ONE_VALUE 10000
+#define GOODONE_VALUE 1000000
+
 char* base10to3(int i);
 void preparation(int dsq, int zero, int one, int goodOne);
 void printArray(int v[], int n);

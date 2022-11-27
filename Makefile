@@ -34,4 +34,4 @@ $(BIN)/$(EXECUTABLE): $(filter-out $(SRC)/evaluation.c $(SRC)/main2.c, $(wildcar
 	@$(CC) $(CC_FLAGS) -I$(INCLUDE) $^ -o $@ $(LIBRARIES)
 
 clean:
-	@-rm $(BIN)/*
+	@-rm -f $(BIN)/*

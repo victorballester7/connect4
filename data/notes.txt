@@ -2,17 +2,12 @@ solve whoStarts
 solve presentation
 solve graphics
 
-try to change chars with uint8.
 review if there are unused functions.
 repassar que les funcions estiguin ben documentades en els headers
 implementar millora de velocitat alpha-beta pruning.
 millorar algortihme a partir de computer vs computer
-poner boton de tirar atras
+solve has_colors() (put it on the front screen)
+print error messages in red
 
+IS THERE A CONSTANT OF THE HIGH AND THE WIDTH OF THE ACTUAL TERMINAL? IF SO, USE IT!!!!
 
-M'HE QUEDAT EN SI HE D'IMPLEMENTAR ALGUNA COSA PERQUÈ L'ALFA-BETA PRUNING VAGI MÉS BÉ. ESTAVA PENSANT EN GUARDAR UN VECTOR AMB TOTS ELS VALORS DE LA TIRADA ANTERIOR. ARA PER ARA, L'ALFA BETA PRUNING NO VA BÉ. SI ES VOL JUGAR AMB L'ALTRE, SÍ QUE ES POT PERÒ S'HA DE TREURE LA VARIABLE *v QUE HE POSAT A MOLTES FUNCIONS DE MINIMAX.c. TAMBÉ CONVINDRIA AJUSTAR MILLOR ELS COEFICIENTS DEL MODEL (goodOne,one...)
-
-
-partida (comença l'ordinador - nivell 3):
-433324543316172 <---!!!!!!!
-425341257411172

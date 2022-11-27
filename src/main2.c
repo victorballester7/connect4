@@ -10,27 +10,31 @@ extern int colorPlayer, colorComputer;
 int supportsColors();
 int main() {
   setlocale(LC_ALL, "");
-  initscr();  // start ncurses mode.
-  clear();    // clear screen.
-  noecho();   // Don't echo() while doing getch().
-  cbreak();   // Line buffering disabled. pass on everything.
+  initscr();             // start ncurses mode.
+  clear();               // clear screen.
+  noecho();              // Don't echo() while doing getch().
+  cbreak();              // Line buffering disabled. pass on everything.
+  keypad(stdscr, TRUE);  // Ability to use the keyboard.
+  curs_set(0);           // make the cursor invisible
   char filenameLogo[30] = "resources/logo1.txt";
 
   // position of the top left corner of the window
   int startRow = (30 - HEIGHT) / 2;
-  int startCol = (80 - WIDTH) / 2;
+  int startCol = (TERMINAL_WIDTH - WIDTH) / 2;
 
   if (!supportsColors()) return 0;
 
-  mvprintw(0, 0, "Use arrow keys to go up and down. Press enter to select a choice.");  // printf in the abstract window
-  refresh();                                                                            // Print it on to the real screen
-  printLogo(filenameLogo, startCol + WIDTH / 2);
   WINDOW* menuWin = createWindow(HEIGHT, WIDTH, startRow, startCol);
-  int choice;
-  while ((choice = movementMenu(menuWin, printMenu)) != 4) {  // Exit
+  int choice = 0, result = 1;  // result = 1 means return to the main menu.
+  while (choice != 4) {        // Exit
+    clear();
+    refresh();
+    topRowComment();
+    printLogo(filenameLogo, startCol + WIDTH / 2);
+    choice = movementMenu(menuWin, printMainMenu);
     switch (choice) {
-      case 1:                                                                                 // Play the game
-        mvprintw(1, 0, "Use arrow keys to go up and down. Press enter to select a choice.");  // printf in the abstract window
+      case 1:  // Play the game
+        while ((result = playGame()) == 1) continue;
         break;
       case 2:  // Statistics
         movementMenu(menuWin, printStats);
@@ -42,6 +46,7 @@ int main() {
       default:  // Exit
         break;
     }
+    if (result == 3) break;  // (result = 3) = EXIT
   }
   clrtoeol();  // erase the current line to the right of the cursor, inclusive, to the end of the current line.
   refresh();
