@@ -8,6 +8,8 @@ implementar millora de velocitat alpha-beta pruning.
 millorar algortihme a partir de computer vs computer
 solve has_colors() (put it on the front screen)
 print error messages in red
+canviar depht i mida tauell a settings.
+arreglar centering del taulell i comentaris
 
 IS THERE A CONSTANT OF THE HIGH AND THE WIDTH OF THE ACTUAL TERMINAL? IF SO, USE IT!!!!
 

@@ -22,17 +22,19 @@
 #define pwd getcwd
 #endif
 
-#define TERMINAL_WIDTH 80
-#define WIDTH 50
-#define HEIGHT 11
+// #define TERMINAL_WIDTH 80   // By default it is stored in constant COLS when ncurses.h is started.
+// #define TERMINAL_HEIGHT 80  // By default it is stored in constant LINES when ncurses.h is started.
+#define WIN_WIDTH 50
+#define WIN_HEIGHT 11
 
 #define INNERSPACE_X 3
 #define INNERSPACE_Y 1
-#define STARTBOARD_X (TERMINAL_WIDTH - (INNERSPACE_X + 1) * NCOLS + 1) / 2
 #define STARTBOARD_Y 5
+// Since STARTBOARD_X depends on the width of the screen, it cannot be declared at the beginning of the program because the screen of ncurses hasn't been initialized yet.
 #define BLINKING_INTERVAL 400000  // in microseconds
 #define BLINKING_TIMES 5
 
+void defineConstants();
 void blinking(int startRow, int startCol, char direction, int color);
 void drawTile(int row, int col, int color);
 void find4inRow(int* startRow, int* startCol, char* direction);
@@ -43,17 +45,24 @@ void uploadFile(char i);
 int presentation();
 WINDOW* createWindow(int height, int width, int startRow, int startCol);
 void destroy_win(WINDOW* localWin);
-int movementMenu(WINDOW* menu_win, char** printMenu(WINDOW*, int, int*));
+int movementMenu(WINDOW* menu_win, char** menu(WINDOW*, int*, int*, int*), int type);
+void printMenu(WINDOW* menu_win, char** menu(WINDOW*, int*, int*, int*), int type, int* n_choices, int highlight);
 void numRowsAndCols(FILE* fp, int* nrows, int* ncols);
 void printLogo(char* filename, int centerCol);
-char** printWhoStarts(WINDOW* menu_win, int highlight, int* n_choices);
-char** printEndingMenu(WINDOW* menu_win, int highlight, int* n_choices);
-char** printTilesReadyToPlay(WINDOW* menu_win, int highlight, int* n_choices);
-char** printMainMenu(WINDOW* menu_win, int highlight, int* n_choices);
-char** printStats(WINDOW* menu_win, int highlight, int* n_choices);
-char** printSettingsP1(WINDOW* menu_win, int highlight, int* n_choices);
-char** printSettingsP2(WINDOW* menu_win, int highlight, int* n_choices);
-char** printColors(WINDOW* menu_win, int highlight, int* n_choices, int col_extra);
+
+char** menuWhoStarts(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuEndingMenu(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuTilesReadyToPlay(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuMainMenu(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuStats(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuDepth(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuBoardSizeRows(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuBoardSizeCols(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuBoardSize(WINDOW* menu_win, int* n_choices, int* startX, int* startY, int row_extra);
+char** menuSettings(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuColorsP1(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuColorsP2(WINDOW* menu_win, int* n_choices, int* startX, int* startY);
+char** menuColors(WINDOW* menu_win, int* n_choices, int* startX, int* startY, int col_extra);
 void topRowComment();
 void wclean(WINDOW* win);
 void drawBoard();

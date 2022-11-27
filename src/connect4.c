@@ -7,8 +7,9 @@
 char player_comp = '1';
 extern int new_goodOne, new_one, new_zero, new_dsq, old_dsq, old_zero, old_one, old_goodOne;
 extern int v_new[730], v_old[730];
-
 extern int colorPlayer, colorComputer;
+int NROWS = 6;  // Number of rows of the board
+int NCOLS = 7;  // Number of columns of the board
 
 char playGame2(int match) {  // do the match. Returns if there is a draw, 1 if the computer wins and 2 if the player wins.
   // int i= presentation();
@@ -69,14 +70,14 @@ char playGame() {  // do the match. Returns if there is a draw, 1 if the compute
   int choice, startCol = 0, startRow = 0;  // startCol is the number of the col where we have done the 4-in-a-Row (if we did). And same with startRow.
   char lastPlayer = '2', winner = '0', direction = '0';
 
-  lastPlayer = (movementMenu(NULL, printWhoStarts) == 1) ? '2' : '1';
+  lastPlayer = (movementMenu(NULL, menuWhoStarts, 0) == 1) ? '2' : '1';
   drawBoard();
   while (!isFull(board)) {
     if (lastPlayer == '2') {  // player's turn
       clearFirstLines(2);
       mvprintw(0, 0, "Where do you want to play? Use arrow keys to go left and right. Press enter to select a choice.");
       refresh();
-      choice = movementMenu(NULL, printTilesReadyToPlay);
+      choice = movementMenu(NULL, menuTilesReadyToPlay, 1);
       choice--;
     } else {  // computer's turn
       clearFirstLines(2);

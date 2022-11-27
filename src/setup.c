@@ -1,6 +1,8 @@
 #include "../include/setup.h"
 
 int colorPlayer = 1, colorComputer = 3;  // defines the default colors of the tiles for the match.
+int STARTBOARD_X = 0;
+extern int DEPTH, NROWS, NCOLS;
 
 char* fileNameCreation() {
   char *fileName = malloc(25 * sizeof(char)), cwd[1024];  // cwd = current working directory
@@ -124,7 +126,7 @@ int endOfGame(char winner, int startRow, int startCol, char direction) {
     s = "SORRY! YOU'VE LOST!";
   else
     s = "CONGRATULATIONS! YOU'VE WON!";
-  mvprintw(STARTBOARD_Y - 3, (TERMINAL_WIDTH - strlen(s)) / 2, "%s", s);
+  mvprintw(STARTBOARD_Y - 3, (COLS - strlen(s)) / 2 + 1, "%s", s);
   refresh();
 
   // blinking
@@ -133,7 +135,7 @@ int endOfGame(char winner, int startRow, int startCol, char direction) {
     blinking(startRow, startCol, direction, color);
   }
   topRowComment();
-  return movementMenu(NULL, printEndingMenu);
+  return movementMenu(NULL, menuEndingMenu, 0);
 }
 
 int supportsColors() {
@@ -278,52 +280,35 @@ void drawBoard() {
   refresh();
 }
 
-char** printWhoStarts(WINDOW* menu_win, int highlight, int* n_choices) {
+char** menuWhoStarts(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   *n_choices = 2;
   char** choices = malloc((*n_choices) * sizeof(char*));
   choices[0] = "Yes";
   choices[1] = "No";
 
-  int col = 0, row = 0;
   char s[22] = "Do you want to start?";
-  mvprintw(row, col, "%s", s);  // print current option in the abstract window
-  col += strlen(s) + 2;
-
-  for (int i = 0; i < *n_choices; i++, row++) {
-    if (highlight == i + 1) {                // Highlight the present choice
-      attron(A_REVERSE);                     // reverse color font and background font ACTIVATED
-      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
-      attroff(A_REVERSE);                    // reverse color font and background font DEACTIVATED
-    } else
-      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
-  }
+  mvprintw(0, 0, "%s", s);  // print current option in the abstract window
+  *startX = strlen(s) + 2;
+  *startY = 0;
   return choices;
 }
 
-char** printEndingMenu(WINDOW* menu_win, int highlight, int* n_choices) {
+char** menuEndingMenu(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   *n_choices = 3;
   char** choices = malloc((*n_choices) * sizeof(char*));
   choices[0] = "Play again";
   choices[1] = "Return to the main menu";
   choices[2] = "Exit";
 
-  int col = 0, row = STARTBOARD_Y + NROWS * (INNERSPACE_Y + 1) + 2;
+  *startY = STARTBOARD_Y + NROWS * (INNERSPACE_Y + 1) + 2;
   char s[28] = "What do you want to do now?";
-  mvprintw(row, col, "%s", s);  // print current option in the abstract window
-  col += strlen(s) + 2;
+  mvprintw(*startY, 0, "%s", s);  // print current option in the abstract window
+  *startX = strlen(s) + 2;
 
-  for (int i = 0; i < *n_choices; i++, row++) {
-    if (highlight == i + 1) {                // Highlight the present choice
-      attron(A_REVERSE);                     // reverse color font and background font ACTIVATED
-      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
-      attroff(A_REVERSE);                    // reverse color font and background font DEACTIVATED
-    } else
-      mvprintw(row, col, "%s", choices[i]);  // print current option in the abstract window
-  }
   return choices;
 }
 
-char** printTilesReadyToPlay(WINDOW* menu_win, int highlight, int* n_choices) {
+char** menuTilesReadyToPlay(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   *n_choices = NCOLS;
   char** choices = malloc((*n_choices) * sizeof(char*));
   for (int i = 0; i < *n_choices; i++) {
@@ -333,22 +318,12 @@ char** printTilesReadyToPlay(WINDOW* menu_win, int highlight, int* n_choices) {
     choices[i][INNERSPACE_X] = '\0';
     // choices[i] = "aaa";
   }
-  int startX = STARTBOARD_X + 1;
-  for (int i = 0; i < *n_choices; i++, startX++) {
-    if (highlight == i + 1) {                                                   // Highlight the present choice
-      attron(COLOR_PAIR(colorPlayer));                                          // change color to COLOR_PAIR(i+1) ACTIVATED
-      mvprintw(STARTBOARD_Y - 1, startX + INNERSPACE_X * i, "%s", choices[i]);  // print the tiles
-      attroff(COLOR_PAIR(colorPlayer));                                         // change color to COLOR_PAIR(i+1) DEACTIVATED
-    } else {
-      attron(COLOR_PAIR(7));                                                    // change color to COLOR_PAIR(i+1) ACTIVATED
-      mvprintw(STARTBOARD_Y - 1, startX + INNERSPACE_X * i, "%s", choices[i]);  // print the tiles
-      attroff(COLOR_PAIR(7));                                                   // change color to COLOR_PAIR(i+1) DEACTIVATED
-    }
-  }
+  *startX = STARTBOARD_X + 1;
+  *startY = STARTBOARD_Y - 1;
   return choices;
 }
 
-char** printMainMenu(WINDOW* menu_win, int highlight, int* n_choices) {
+char** menuMainMenu(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   *n_choices = 4;
   char** choices = malloc((*n_choices) * sizeof(char*));
   choices[0] = "Play";
@@ -356,33 +331,28 @@ char** printMainMenu(WINDOW* menu_win, int highlight, int* n_choices) {
   choices[2] = "Settings";
   choices[3] = "Exit";
 
-  int col = 2, row = 2;
+  *startX = 2;
+  *startY = 2;
   box(menu_win, 0, 0);
-  for (int i = 0; i < *n_choices; i++, row++) {
-    if (highlight == i + 1) {                           // Highlight the present choice
-      wattron(menu_win, A_REVERSE);                     // reverse color font and background font ACTIVATED
-      mvwprintw(menu_win, row, col, "%s", choices[i]);  // print current option in the abstract window
-      wattroff(menu_win, A_REVERSE);                    // reverse color font and background font DEACTIVATED
-    } else
-      mvwprintw(menu_win, row, col, "%s", choices[i]);  // print current option in the abstract window
-  }
-  mvwprintw(menu_win, HEIGHT - 3, WIDTH - 27 - INNERSPACE_X, "Current player's tile:");
-  wattron(menu_win, COLOR_PAIR(colorPlayer));                                 // change color to COLOR_PAIR(i+1) ACTIVATED
-  mvwhline(menu_win, HEIGHT - 3, WIDTH - INNERSPACE_X - 1, 0, INNERSPACE_X);  // print the tiles
-  // mvwprintw(menu_win, HEIGHT - 3, WIDTH - INNERSPACE_X - 1, "   ");     // print the tiles
+
+  mvwprintw(menu_win, WIN_HEIGHT - 3, WIN_WIDTH - 27 - INNERSPACE_X, "Current player's tile:");
+  wattron(menu_win, COLOR_PAIR(colorPlayer));                                         // change color to COLOR_PAIR(i+1) ACTIVATED
+  mvwhline(menu_win, WIN_HEIGHT - 3, WIN_WIDTH - INNERSPACE_X - 1, 0, INNERSPACE_X);  // print the tiles
+  // mvwprintw(menu_win, WIN_HEIGHT - 3, WIN_WIDTH - INNERSPACE_X - 1, "   ");     // print the tiles
   wattroff(menu_win, COLOR_PAIR(colorPlayer));  // change color to COLOR_PAIR(i+1) DEACTIVATED
-  mvwprintw(menu_win, HEIGHT - 2, WIDTH - 27 - INNERSPACE_X, "Current computer's tile:");
-  wattron(menu_win, COLOR_PAIR(colorComputer));                               // change color to COLOR_PAIR(i+1) ACTIVATED
-  mvwhline(menu_win, HEIGHT - 2, WIDTH - INNERSPACE_X - 1, 0, INNERSPACE_X);  // print the tiles
-  wattroff(menu_win, COLOR_PAIR(colorComputer));                              // change color to COLOR_PAIR(i+1) DEACTIVATED
-  wrefresh(menu_win);                                                         // print the menu in the real screen
+  mvwprintw(menu_win, WIN_HEIGHT - 2, WIN_WIDTH - 27 - INNERSPACE_X, "Current computer's tile:");
+  wattron(menu_win, COLOR_PAIR(colorComputer));                                       // change color to COLOR_PAIR(i+1) ACTIVATED
+  mvwhline(menu_win, WIN_HEIGHT - 2, WIN_WIDTH - INNERSPACE_X - 1, 0, INNERSPACE_X);  // print the tiles
+  wattroff(menu_win, COLOR_PAIR(colorComputer));                                      // change color to COLOR_PAIR(i+1) DEACTIVATED
+  wrefresh(menu_win);                                                                 // print the menu in the real screen
   return choices;
 }
 
-char** printStats(WINDOW* menu_win, int highlight, int* n_choices) {
+char** menuStats(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   *n_choices = 1;
   char** choices = malloc((*n_choices) * sizeof(char*));
   choices[0] = "Go back";
+
   int col = 2, row = 2;
   char filename[30] = "data/statistics.txt";
   FILE* fp = fopen(filename, "r");
@@ -396,7 +366,6 @@ char** printStats(WINDOW* menu_win, int highlight, int* n_choices) {
   int played, won, lost, tied;
   fscanf(fp, "Games played: %d\nGames won (by the computer): %d\nGames lost (by the computer): %d\nGames tied: %d\n", &played, &won, &lost, &tied);
   fclose(fp);
-
   box(menu_win, 0, 0);
 
   mvwprintw(menu_win, row, col, "Games played:\t\t\t%d", played);
@@ -404,26 +373,90 @@ char** printStats(WINDOW* menu_win, int highlight, int* n_choices) {
   mvwprintw(menu_win, row + 2, col, "Loss rate (by the computer): \t%.2lf %%", lost * 100. / played);
   mvwprintw(menu_win, row + 3, col, "Tie rate:\t\t\t%.2lf %%", tied * 100. / played);
   // printf("Games played: %d\nWin rate (by the computer): %.2lf\nLose rate (by the computer): %.2lf\nTie rate: %.2lf\n", played, won * 100. / played, lost * 100. / played, tied * 100. / played);
-  wattron(menu_win, A_REVERSE);  // reverse color font and background font ACTIVATED
-  mvwprintw(menu_win, HEIGHT - 2, WIDTH - strlen(choices[0]) - 1, "%s", choices[0]);
-  wattroff(menu_win, A_REVERSE);  // reverse color font and background font DEACTIVATED
-  wrefresh(menu_win);             // print the menu in the real screen
+  *startX = WIN_WIDTH - strlen(choices[0]) - 1;
+  *startY = WIN_HEIGHT - 2;
+  return choices;
+}
+char** menuDepth(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
+  box(menu_win, 0, 0);
+  *n_choices = 9;
+  char** choices = malloc((*n_choices) * sizeof(char*));
+  for (int i = 0; i < *n_choices; i++) {
+    choices[i] = malloc(3 * sizeof(char));
+    sprintf(choices[i], "%d", i + 1);
+  }
+
+  int row = 2, col = 2;
+  mvwprintw(menu_win, row, col, "The current depth of the algorithm is %i.", DEPTH);
+  mvwprintw(menu_win, row + 1, col, "Move with the arrow keys to change it.");
+  mvwprintw(menu_win, row + 3, col, "Depth:");
+
+  *startX = col + 7 + 1;
+  *startY = row + 3;
+
   return choices;
 }
 
-char** printSettingsP1(WINDOW* menu_win, int highlight, int* n_choices) {
+char** menuBoardSizeRows(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
+  return menuBoardSize(menu_win, n_choices, startX, startY, 0);
+}
+char** menuBoardSizeCols(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
+  int row_extra = 1;
+  return menuBoardSize(menu_win, n_choices, startX, startY, row_extra);
+}
+
+char** menuBoardSize(WINDOW* menu_win, int* n_choices, int* startX, int* startY, int row_extra) {
+  box(menu_win, 0, 0);
+  *n_choices = 20;
+  char** choices = malloc((*n_choices) * sizeof(char*));
+  for (int i = 0; i < *n_choices; i++) {
+    choices[i] = malloc(3 * sizeof(char));
+    sprintf(choices[i], "%d", i + 1);
+  }
+
+  int row = 2, col = 2;
+  mvwprintw(menu_win, row, col, "The size of the board is %i \u2715 %i.", NROWS, NCOLS);
+  mvwprintw(menu_win, row + 1, col, "Move with the arrow keys to change it.");
+
+  if (row_extra == 0)
+    mvwprintw(menu_win, row, col, "Number of rows:");
+  else
+    mvwprintw(menu_win, row + row_extra, col, "Number of columns:");
+
+  *startX = col + 19 + 1;
+  *startY = row + row_extra;
+
+  return choices;
+}
+
+char** menuSettings(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
+  box(menu_win, 0, 0);
+  *n_choices = 4;
+  char** choices = malloc((*n_choices) * sizeof(char*));
+  choices[0] = "Change the depth of the algorithm";
+  choices[1] = "Change the size of the board";
+  choices[2] = "Change the colors of the tiles:";
+  choices[3] = "Go back";
+
+  *startX = 2;
+  *startY = 2;
+
+  return choices;
+}
+
+char** menuColorsP1(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   int col_extra = 0, col = 2;
   mvwprintw(menu_win, 1, col + col_extra, "Player's tile");
-  return printColors(menu_win, highlight, n_choices, col_extra);
+  return menuColors(menu_win, n_choices, startX, startY, col_extra);
 }
 
-char** printSettingsP2(WINDOW* menu_win, int highlight, int* n_choices) {
-  int col_extra = WIDTH / 2, col = 2;
+char** menuColorsP2(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
+  int col_extra = WIN_WIDTH / 2, col = 2;
   mvwprintw(menu_win, 1, col + col_extra, "Computer's tile");
-  return printColors(menu_win, highlight, n_choices, col_extra);
+  return menuColors(menu_win, n_choices, startX, startY, col_extra);
 }
 
-char** printColors(WINDOW* menu_win, int highlight, int* n_choices, int col_extra) {
+char** menuColors(WINDOW* menu_win, int* n_choices, int* startX, int* startY, int col_extra) {
   box(menu_win, 0, 0);
   *n_choices = 6;
   char** choices = malloc((*n_choices) * sizeof(char*));
@@ -434,30 +467,73 @@ char** printColors(WINDOW* menu_win, int highlight, int* n_choices, int col_extr
   choices[4] = "Magenta:";
   choices[5] = "Cyan:";
 
-  int row = 3, col = 2, maxCol = 12;  // MaxCol = a number smaller than WIDTH but larger than any length within choices.
+  *startY = 3;
+  *startX = 2 + col_extra;
+  int maxCol = 12;  // MaxCol = a number smaller than WIDTH but larger than any length within choices.
 
-  for (int i = 0; i < *n_choices; i++, row++) {
-    if (highlight == i + 1) {                                       // Highlight the present choice
-      wattron(menu_win, A_REVERSE);                                 // reverse color font and background font ACTIVATED
-      mvwprintw(menu_win, row, col + col_extra, "%s", choices[i]);  // print current option in the abstract window
-      wattroff(menu_win, A_REVERSE);                                // reverse color font and background font DEACTIVATED
-    } else
-      mvwprintw(menu_win, row, col + col_extra, "%s", choices[i]);  // print current option in the abstract window
-    wattron(menu_win, COLOR_PAIR(i + 1));                           // change color to COLOR_PAIR(i+1) ACTIVATED
-    mvwhline(menu_win, row, maxCol + col_extra, 0, INNERSPACE_X);   // print the tiles
-    wattroff(menu_win, COLOR_PAIR(i + 1));                          // change color to COLOR_PAIR(i+1) DEACTIVATED
+  for (int i = 0; i < *n_choices; i++, (*startY)++) {
+    wattron(menu_win, COLOR_PAIR(i + 1));                              // change color to COLOR_PAIR(i+1) ACTIVATED
+    mvwhline(menu_win, *startY, maxCol + col_extra, 0, INNERSPACE_X);  // print the tiles
+    wattroff(menu_win, COLOR_PAIR(i + 1));                             // change color to COLOR_PAIR(i+1) DEACTIVATED
   }
+  *startY = 3;
   wrefresh(menu_win);  // print the menu in the real screen
   return choices;
 }
 
-int movementMenu(WINDOW* menu_win, char** printMenu(WINDOW*, int, int*)) {
-  int choice = 0, highlight = 1, c, n_choices;
-  if (printMenu == printSettingsP2 && colorPlayer == 1)
+void printMenu(WINDOW* menu_win, char** menu(WINDOW*, int*, int*, int*), int type, int* n_choices, int highlight) {
+  int startX = 0, startY = 0;
+  char** choices = menu(menu_win, n_choices, &startX, &startY);
+  if (choices == NULL) return;
+  if (type == 0) {
+    for (int i = 0; i < *n_choices; i++, startY++) {
+      if (menu_win == NULL) {
+        if (highlight == i + 1) {                      // Highlight the present choice
+          attron(A_REVERSE);                           // reverse color font and background font ACTIVATED
+          mvprintw(startY, startX, "%s", choices[i]);  // print current option in the abstract window
+          attroff(A_REVERSE);                          // reverse color font and background font DEACTIVATED
+        } else
+          mvprintw(startY, startX, "%s", choices[i]);  // print current option in the abstract window
+      } else {
+        if (highlight == i + 1) {                                 // Highlight the present choice
+          wattron(menu_win, A_REVERSE);                           // reverse color font and background font ACTIVATED
+          mvwprintw(menu_win, startY, startX, "%s", choices[i]);  // print current option in the abstract window
+          wattroff(menu_win, A_REVERSE);                          // reverse color font and background font DEACTIVATED
+        } else
+          mvwprintw(menu_win, startY, startX, "%s", choices[i]);  // print current option in the abstract window
+      }
+    }
+  } else if (type == 1) {  // menu for printing the tiles above the board
+    for (int i = 0; i < *n_choices; i++, startX++) {
+      if (highlight == i + 1) {                                         // Highlight the present choice
+        attron(COLOR_PAIR(colorPlayer));                                // change color to COLOR_PAIR(i+1) ACTIVATED
+        mvprintw(startY, startX + INNERSPACE_X * i, "%s", choices[i]);  // print the tiles
+        attroff(COLOR_PAIR(colorPlayer));                               // change color to COLOR_PAIR(i+1) DEACTIVATED
+      } else {
+        attron(COLOR_PAIR(7));                                          // change color to COLOR_PAIR(i+1) ACTIVATED
+        mvprintw(startY, startX + INNERSPACE_X * i, "%s", choices[i]);  // print the tiles
+        attroff(COLOR_PAIR(7));                                         // change color to COLOR_PAIR(i+1) DEACTIVATED
+      }
+    }
+  } else {                                                              // menu of numbers (i.e. for Depth settings and Board-size settings)
+    mvwprintw(menu_win, startY, startX, "  ");                          // to clear the neighbourhood of the number where will be placed (because if there is a to digit number and we change it to a one-digit number... It will remain a digit of the first number!)
+    mvwprintw(menu_win, startY, startX, "%s", choices[highlight - 1]);  // print current option in the abstract window}
+  }
+  if (type != 0) {
+    for (int i = 0; i < *n_choices; i++) free(choices[i]);
+  }
+  free(choices);
+}
+
+int movementMenu(WINDOW* menu_win, char** menu(WINDOW*, int*, int*, int*), int type) {
+  int choice = 0, highlight = 1, c, n_choices = 0;
+  if (menu == menuColorsP2 && colorPlayer == 1)
     highlight = 2;
-  else if (printMenu == printTilesReadyToPlay)
+  else if (menu == menuTilesReadyToPlay)
     highlight = NCOLS / 2 + 1;
-  char** choices = printMenu(menu_win, highlight, &n_choices);
+  else if (menu == menuDepth)
+    highlight = DEPTH;
+  printMenu(menu_win, menu, type, &n_choices, highlight);
   refresh();
   while (true) {
     c = (menu_win == NULL) ? getch() : wgetch(menu_win);
@@ -484,18 +560,17 @@ int movementMenu(WINDOW* menu_win, char** printMenu(WINDOW*, int, int*)) {
         refresh();
         break;
     }
-    if (printMenu == printSettingsP2 && colorPlayer == highlight) {
+    if (menu == menuColorsP2 && colorPlayer == highlight) {
       if (highlight == n_choices)
         highlight = 1;
       else
         highlight++;
     }
-    printMenu(menu_win, highlight, &n_choices);
+    printMenu(menu_win, menu, type, &n_choices, highlight);
     if (choice != 0) break;  // User did a choice come out of the infinite loop
   }
 
-  if (printMenu != printSettingsP1) wclean(menu_win);
-  free(choices);
+  if (menu != menuColorsP1) wclean(menu_win);
   return choice;
 }
 

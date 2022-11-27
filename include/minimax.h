@@ -10,17 +10,19 @@
 
 #include "../include/connect4.h"
 
-#define DEPTH 3                              // Number of levels on the Minimax algorithm.
+// #define DEPTH 3                              // Number of levels on the Minimax algorithm.
 #define MIN(X, Y) (((X) < (Y)) ? (X) : (Y))  // minimum of two values
 #define MAX(X, Y) (((X) < (Y)) ? (Y) : (X))  // maximum of two values
+// extern int NROWS, NCOLS;
 
 /// @brief Node of a tree.
 typedef struct node {
-  int level;                 // level of the node (starting at 0).
-  struct node **children;    // children of the node.
-  int n_children;            // number of children of the node.
-  char board[NROWS][NCOLS];  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
-  int value;                 // value assigned to the node for the Minimax algorithm.
+  int level;               // level of the node (starting at 0).
+  struct node **children;  // children of the node.
+  int n_children;          // number of children of the node.
+  // char board[NROWS][NCOLS];  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
+  char **board;  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
+  int value;     // value assigned to the node for the Minimax algorithm.
   int alpha;
   int beta;
 } Node;

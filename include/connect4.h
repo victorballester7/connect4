@@ -9,8 +9,8 @@
 #include <string.h>
 #include <time.h>
 
-#define NROWS 6        // Number of rows of the board
-#define NCOLS 7        // Number of columns of the board
+extern int NROWS, NCOLS;
+
 #define INF 100000000  // lower bound when doing 4-in-a-row. In each board we can have at most 100 points per string and in total there are 4 * NCOLS strings.
 
 /// @brief Adds a tile of the player 'player' in the column 'col'.

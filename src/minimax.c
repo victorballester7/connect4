@@ -1,5 +1,8 @@
 #include "../include/minimax.h"
 
+int DEPTH = 3;  // Number of levels on the Minimax algorithm.
+extern const int NROWS, NCOLS;
+
 void copyBoard(char dest[NROWS][NCOLS], char src[NROWS][NCOLS]) {  // copies the 'dest' board to the 'src' board.
   for (int i = 0; i < NROWS; i++) {
     for (int j = 0; j < NCOLS; j++)
