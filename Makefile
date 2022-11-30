@@ -30,7 +30,7 @@ all: $(BIN)/$(EXECUTABLE)
 run: clean all
 	@./$(BIN)/$(EXECUTABLE)
 
-$(BIN)/$(EXECUTABLE): $(filter-out $(SRC)/evaluation.c $(SRC)/main2.c, $(wildcard $(SRC)/*.c))
+$(BIN)/$(EXECUTABLE): $(filter-out $(SRC)/evaluation.c $(SRC)/main_old.c, $(wildcard $(SRC)/*.c))
 	@$(CC) $(CC_FLAGS) -I$(INCLUDE) $^ -o $@ $(LIBRARIES)
 
 clean:

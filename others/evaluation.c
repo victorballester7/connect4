@@ -23,7 +23,7 @@ int main() {
   // As a start suppose goodOne <= 40.
   // int dsq = -20, zero = 0, one = 30, goodOne = 80;
   preparation(DSQ_VALUE, ZERO_VALUE, ONE_VALUE, GOODONE_VALUE);
-  // char board[NROWS][NCOLS];
+  // char **board;
   // memset(board, '0', NCOLS * NROWS);
   // // int s;
   // for (int i = 35; i >= 30; i--) {
@@ -330,4 +330,13 @@ void preparation(int dsq, int zero, int one, int goodOne) {
     printf("%d, ", evaluateNumber(s, dsq, zero, one, goodOne));
   }
   puts(" ");
+}
+
+char* exchangeOnesAndTwos(char* str) {  // exchange the '1' with '2' in the string 'str' and viceversa.
+  int len = strlen(str);
+  // printf("exchangeOnesTwos=%s ", str);
+  for (int i = 0; i < len; i++)
+    str[i] = (str[i] == '1') ? '2' : ((str[i] == '2') ? '1' : '0');
+  // printf("%s\n", str);
+  return str;
 }

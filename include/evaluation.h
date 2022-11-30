@@ -1,7 +1,7 @@
 #ifndef __EVALUATION_H__
 #define __EVALUATION_H__
 
-#define DSQ_VALUE -10000
+#define DSQ_VALUE -2500
 #define ZERO_VALUE 100
 #define ONE_VALUE 10000
 #define GOODONE_VALUE 1000000
@@ -19,5 +19,7 @@ int computer_iteration(int old_dsq, int old_zero, int old_one, int old_goodOne);
 void computer_iteration2(int old_dsq, int old_zero, int old_one, int old_goodOne);
 void prepareVector(int v[], int dsq, int zero, int one, int goodOne);
 // char* extractString(char* str, int n, int m);
+
+char* exchangeOnesAndTwos(char* str);
 
 #endif

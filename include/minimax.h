@@ -20,39 +20,39 @@ typedef struct node {
   int level;               // level of the node (starting at 0).
   struct node **children;  // children of the node.
   int n_children;          // number of children of the node.
-  // char board[NROWS][NCOLS];  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
+  // char **board;  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
   char **board;  // board filled with 0 (if the cell is empty), 1 (if it is the computer's tile) or 2 (if it is the player's tile).
   int value;     // value assigned to the node for the Minimax algorithm.
   int alpha;
   int beta;
 } Node;
 
-void print1Level(Node *father);
-int *ordering1Level(Node *father);
-
-int nProduct(int n, int times);
-
 /// @brief Creates the tree, does the minimax with the implementation of the alpha-beta pruning and deletes the tree except for the root node.
 /// @param p A node from which start the tree (the root).
-/// @return Returns the value of the node p obtained from the Minimax algorithm.
+/// @return Returns the value of the node p obtained from the Alpha-Beta algorithm.
 int alphaBetaTree(Node *p);
 
 /// @brief Translates the index of the child into the actual column of the board.
 /// @param board Board of the game.
 /// @param i Index of the child (i.e. the i-th child).
 /// @return The column of the board corresponding to the child i, or -1 if not founded.
-int computeColumn(char board[NROWS][NCOLS], int i);
+int computeColumn(char **board, int i);
 
 /// @brief Searches for the first (in fact the last if they are ordered from 0 to NROWS - 1) empty row in the column 'col'.
 /// @param board Board of the game.
 /// @param col Number of the column.
 /// @return The first (in fact the last if they are ordered from 0 to NROWS - 1) empty row in the column 'col', or -1 if not founded.
-int computeRow(char board[NROWS][NCOLS], int col);
+int computeRow(char **board, int col);
 
 /// @brief The computer does the play.
 /// @param board Board of the game.
 /// @return The column in which the computer wants to play.
-int computerPlay(char board[NROWS][NCOLS]);
+int computerPlay(char **board);
+
+/// @brief Copies the board 'src' to the board 'dest'.
+/// @param dest Board copied from 'src'.
+/// @param src Board to copy to 'dest'.
+void copyBoard(char **dest, char **src);
 
 /// @brief Creates 1 level of nodes that are children of the node 'father'
 /// @param father A node from which we want to create children.
@@ -62,7 +62,7 @@ int create1Level(Node *father);
 /// @brief Creates the root node of the tree.
 /// @param board Board of the game.
 /// @return A pointer to the node root.
-Node *createFirstNode(char board[NROWS][NCOLS]);
+Node *createFirstNode(char **board);
 
 /// @brief Creates a node (different from the root) of the tree.
 /// @param father The father of the node to be created.
@@ -83,28 +83,28 @@ void delete1Level(Node *father);
 /// @param p A node of the tree.
 void deleteNode(Node *p);
 
+/// @brief Decides which column does the computer have to play in.
+/// @param p The node in which we are making the choice.
+/// @return The number of the column in which the computer has to play.
+int makeChoice(Node *p);
+
 /// @brief Add the new tile to the board of the game.
 /// @param board Board of the game.
 /// @param row Row to play in.
 /// @param col Column to play in.
 /// @param level Level of the tree in which we are doing the play.
-void makePlay(char board[NROWS][NCOLS], int row, int col, int level);
-
-/// @brief Copies the board 'src' to the board 'dest'.
-/// @param dest Board copied from 'src'.
-/// @param src Board to copy to 'dest'.
-void copyBoard(char dest[NROWS][NCOLS], char src[NROWS][NCOLS]);
-
-/// @brief Decides which column does the computer have to play in.
-/// @param p The node in which we are making the choice.
-/// @return The number of the column in which the computer has to play.
-int makeChoice(Node *p);
+void makePlay(char **board, int row, int col, int level);
 
 /// @brief Implements the Minimax algorithm.
 /// @param p The node in which we are doing the Minimax algorithm.
 /// @return The value that gives the Minimax algorithm.
 int minimax(Node *p);
 
+/// @brief A function converting the level of the algorithm to the player that is playing at that time of the match
+/// @param level Level of the algorithm
+/// @return '1' for the computer, '2' for the player
 char whichPlayer(int level);
+
+// int *ordering1Level(Node *father);
 
 #endif
