@@ -72,7 +72,7 @@ Node *createNode(Node *father, int child_index);
 
 /// @brief Create the tree for the Minimax algorithm, does the Minimax algorithm and deletes all the nodes except for the first one.
 /// @param p Node root of the tree.
-/// @return .........
+/// @return The value of the choice of the column, or 0.
 int createTree(Node *p);
 
 /// @brief Deletes all children of the node 'father'.

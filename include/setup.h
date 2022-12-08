@@ -26,10 +26,6 @@
 // #define TERMINAL_HEIGHT 80  // By default it is stored in constant LINES when ncurses.h is started.
 #define WIN_WIDTH 50
 #define WIN_HEIGHT 11
-#define INNERSPACE_X 11
-#define INNERSPACE_Y 4
-#define STARTBOARD_Y 4 + INNERSPACE_Y
-// Since STARTBOARD_X depends on the width of the screen, it cannot be declared at the beginning of the program because the screen of ncurses hasn't been initialized yet.
 #define BLINKING_INTERVAL 400000  // in microseconds
 #define BLINKING_TIMES 5
 #define ANIMATION_INTERVAL 25000  // in microseconds
@@ -84,6 +80,14 @@ int endOfMatch(char winner, int startRow, int startCol, char direction);
 /// @brief Converts the DEPTH of the algorithm into a more firendlier name of difficulty.
 /// @return The name of the difficulty associated with the current DEPTH.
 char* getDifficulty();
+
+/// @brief Converts the size of the tiles of the board into "small", "medium" or "large"
+/// @return Either on of the following strings "small", "medium" or "large".
+char* getNameSize();
+
+/// @brief Checks whether or not a key has been pressed.
+/// @return 1 if a key has been pressed and 0 otherwise.
+int kbhit();
 
 /// @brief Menu for changing the board size.
 /// @param menu_win Pointer to the window where the menu is printed.
@@ -225,6 +229,11 @@ void printMenu(WINDOW* menu_win, char** menu(WINDOW*, int*, int*, int*), int typ
 /// @param lenX width of the rectangle.
 /// @param lenY height of the rectangle
 void rectangle(int startX, int startY, int lenX, int lenY);
+
+/// @brief Sets the dimensions of the minimum width of the terminal and the minimum height of the terminal
+/// @param min_terminal_width Pointer to the parameter controlling the minimum width of the terminal
+/// @param min_terminal_height Pointer to the parameter controlling the minimum height of the terminal
+void setMinDimensions(int* min_terminal_width, int* min_terminal_height);
 
 /// @brief Function to decide whether or not your function supports colors.
 /// @return 1 if your terminal supports colors; 0, otherwise.

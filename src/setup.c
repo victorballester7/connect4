@@ -1,7 +1,13 @@
 #include "../include/setup.h"
 
 int colorPlayer = 1, colorComputer = 3;  // defines the default colors of the tiles for the match.
+
+int INNERSPACE_X = 11;
+int INNERSPACE_Y = 4;
 int STARTBOARD_X = 0;
+int STARTBOARD_Y = 0;
+int NROWS_MAX, NCOLS_MAX;
+// Since STARTBOARD_X depends on the width of the screen, it cannot be declared at the beginning of the program because the screen of ncurses hasn't been initialized yet.
 extern int DEPTH, NROWS, NCOLS, LAST_CHOICE;
 
 void blinking(int startRow, int startCol, char direction, int color) {
@@ -38,6 +44,7 @@ void blinking(int startRow, int startCol, char direction, int color) {
     }
     refresh();
     usleep(BLINKING_INTERVAL);
+    if (kbhit()) return;  // if a key is pressed, exit.
   }
 }
 
@@ -174,9 +181,27 @@ char* getDifficulty() {
   return choices[DEPTH - MIN_DEPTH];
 }
 
+char* getNameSize() {
+  if (INNERSPACE_Y == 4)
+    return "large";
+  else if (INNERSPACE_Y == 2)
+    return "medium";
+  else
+    return "small";
+}
+
+int kbhit() {
+  nodelay(stdscr, TRUE);
+  if (getch() != ERR) {
+    nodelay(stdscr, FALSE);
+    return 1;
+  } else {
+    nodelay(stdscr, FALSE);
+    return 0;
+  }
+}
+
 char** menuBoardSize(WINDOW* menu_win, int* n_choices, int* startX, int* startY, int row_extra) {
-  int NCOLS_MAX = (COLS - 3) / (INNERSPACE_X + 1);           // we want to leave a margin on both sides.
-  int NROWS_MAX = (LINES - 5 - 4) / (INNERSPACE_Y + 1) - 1;  // we leave 5 spaces on the bottom and 4 on the top due to future queries.
   int row = 1, col = 2;
   mvwprintw(menu_win, row, col, "The size of the board is %i \u2715 %i. Move with the arrow keys to change it.", NROWS, NCOLS);
   wattron(menu_win, COLOR_PAIR(10));
@@ -187,17 +212,17 @@ char** menuBoardSize(WINDOW* menu_win, int* n_choices, int* startX, int* startY,
   *startX = col + 19 + 1;
 
   if (row_extra == 0) {
-    *n_choices = NROWS_MAX;
+    *n_choices = NROWS_MAX - 3;  // we remove the boards with 1, 2 or 3 rows.
     mvwprintw(menu_win, *startY, col, "Number of rows:");
   } else {
-    *n_choices = NCOLS_MAX;
+    *n_choices = NCOLS_MAX - 3;  // we remove the boards with 1, 2 or 3 cols.
     mvwprintw(menu_win, *startY, col, "Number of columns:");
   }
 
   char** choices = malloc((*n_choices) * sizeof(char*));
   for (int i = 0; i < *n_choices; i++) {
     choices[i] = malloc(3 * sizeof(char));
-    sprintf(choices[i], "%d", i + 1);
+    sprintf(choices[i], "%d", 3 + *n_choices - i);  // to be coherent with the arrow keys, we order them decreasingly.
   }
   return choices;
 }
@@ -301,7 +326,13 @@ char** menuMainMenu(WINDOW* menu_win, int* n_choices, int* startX, int* startY) 
   mvwprintw(menu_win, WIN_HEIGHT - 2, WIN_WIDTH - length - space_for_tiles, "Level of difficulty:");
   mvwprintw(menu_win, WIN_HEIGHT - 2, WIN_WIDTH - 1 - strlen(s), "%s", s);
 
-  mvwprintw(menu_win, WIN_HEIGHT - 1, WIN_WIDTH - length - space_for_tiles, "Size of the board:\t    %i \u2715 %i", NROWS, NCOLS);
+  // the if's are just for the correct right-alignment.
+  if (NROWS >= 10 && NCOLS >= 10)
+    mvwprintw(menu_win, WIN_HEIGHT - 1, WIN_WIDTH - length - space_for_tiles, "Size of the board:\t  %i \u2715 %i", NROWS, NCOLS);
+  else if ((NROWS >= 10 && NCOLS < 10) || (NROWS < 10 && NCOLS >= 10))
+    mvwprintw(menu_win, WIN_HEIGHT - 1, WIN_WIDTH - length - space_for_tiles, "Size of the board:\t   %i \u2715 %i", NROWS, NCOLS);
+  else
+    mvwprintw(menu_win, WIN_HEIGHT - 1, WIN_WIDTH - length - space_for_tiles, "Size of the board:\t    %i \u2715 %i", NROWS, NCOLS);
 
   wrefresh(menu_win);  // print the menu in the real screen
   return choices;
@@ -383,15 +414,18 @@ char** menuWhoStarts(WINDOW* menu_win, int* n_choices, int* startX, int* startY)
 
 int movementMenu(WINDOW* menu_win, char** menu(WINDOW*, int*, int*, int*), int type) {
   int choice = 0, highlight = 1, c, n_choices = 0;
+  topRowComment();
   if (menu == menuColorsP2 && colorPlayer == 1)
     highlight = 2;
   else if (menu == menuTilesReadyToPlay)
     highlight = LAST_CHOICE;
   else if (menu == menuBoardSizeRows)
-    highlight = NROWS;
+    highlight = NROWS_MAX - NROWS + 1;
   else if (menu == menuBoardSizeCols)
-    highlight = NCOLS;
-  topRowComment();
+    highlight = NCOLS_MAX - NCOLS + 1;
+  else if (menu == menuMainMenu)
+    mvprintw(1, 0, "You have configured the size of the board to %s. To change it, exit the program and resize your terminal.", getNameSize());
+
   printMenu(menu_win, menu, type, &n_choices, highlight);
   refresh();
   while (true) {
@@ -543,6 +577,13 @@ void rectangle(int startX, int startY, int lenX, int lenY) {
   mvprintw(startY, startX + lenX, "\u2510");
   mvprintw(startY + lenY, startX + lenX, "\u2518");
   refresh();
+}
+
+void setMinDimensions(int* min_terminal_width, int* min_terminal_height) {
+  STARTBOARD_X = (COLS - (INNERSPACE_X + 1) * NCOLS + 1) / 2 - 1;
+  STARTBOARD_Y = 4 + INNERSPACE_Y;
+  *min_terminal_width = (INNERSPACE_X + 1) * NCOLS + 3;
+  *min_terminal_height = STARTBOARD_Y + 6 + (INNERSPACE_Y + 1) * NROWS + 1;  // we leave 5 spaces on the bottom due to future queries.
 }
 
 int supportsColors() {

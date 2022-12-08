@@ -5,9 +5,8 @@
 #include "../include/minimax.h"
 #include "../include/setup.h"
 
-extern int colorPlayer, colorComputer, STARTBOARD_X, DEPTH, NROWS, NCOLS;
+extern int colorPlayer, colorComputer, INNERSPACE_X, INNERSPACE_Y, STARTBOARD_X, STARTBOARD_Y, DEPTH, NROWS, NCOLS, NROWS_MAX, NCOLS_MAX;
 
-int supportsColors();
 int main() {
   setlocale(LC_ALL, "");
   initscr();             // start ncurses mode.
@@ -16,9 +15,9 @@ int main() {
   cbreak();              // Line buffering disabled. pass on everything.
   keypad(stdscr, TRUE);  // Ability to use the keyboard.
   curs_set(0);           // make the cursor invisible
-  STARTBOARD_X = (COLS - (INNERSPACE_X + 1) * NCOLS + 1) / 2 - 1;
-  int MIN_TERMINAL_WIDTH = (INNERSPACE_X + 1) * NCOLS + 3;
-  int MIN_TERMINAL_HEIGHT = STARTBOARD_Y + 6 + (INNERSPACE_Y + 1) * NROWS + 1;  // we leave 5 spaces on the bottom due to future queries.
+  int MIN_TERMINAL_WIDTH;
+  int MIN_TERMINAL_HEIGHT;
+  setMinDimensions(&MIN_TERMINAL_WIDTH, &MIN_TERMINAL_HEIGHT);
   char filenameLogo[30] = "resources/logo.txt";
 
   // position of the top left corner of the window
@@ -32,14 +31,27 @@ int main() {
     return 1;
   }
 
-  if (LINES < MIN_TERMINAL_HEIGHT || COLS < MIN_TERMINAL_WIDTH) {
-    attron(COLOR_PAIR(9));
-    mvprintw(0, 0, "Your terminal is too small. In order to play with a larger board exit the program and resize it to at least %i \u2715 %i. Then run the program again. Press any key to exit.", MIN_TERMINAL_HEIGHT, MIN_TERMINAL_WIDTH);
-    attroff(COLOR_PAIR(9));
-    getch();
-    ending();
-    return 1;
+  int count = -1;
+  while (++count < 3) {
+    if (LINES < MIN_TERMINAL_HEIGHT || COLS < MIN_TERMINAL_WIDTH) {
+      if (count == 2) {
+        attron(COLOR_PAIR(9));
+        mvprintw(0, 0, "Your terminal is too small. In order to play with a larger board exit the program and resize it to at least %i \u2715 %i. Then run the program again. Press any key to exit.", MIN_TERMINAL_HEIGHT, MIN_TERMINAL_WIDTH);
+        attroff(COLOR_PAIR(9));
+        getch();
+        ending();
+        return 1;
+      } else if (count == 1)  // small size
+        INNERSPACE_X = 3;
+      else if (count == 0)  // medium size
+        INNERSPACE_X = 5;
+      INNERSPACE_Y /= 2;
+      setMinDimensions(&MIN_TERMINAL_WIDTH, &MIN_TERMINAL_HEIGHT);
+    } else
+      break;
   }
+  NCOLS_MAX = (COLS - 3) / (INNERSPACE_X + 1);           // we want to leave a margin on both sides.
+  NROWS_MAX = (LINES - 5 - 4) / (INNERSPACE_Y + 1) - 1;  // we leave 5 spaces on the bottom and 4 on the top due to future queries.
 
   WINDOW* menuWin = createWindow(WIN_HEIGHT, WIN_WIDTH, startRow, startCol);
   int choice = 0, choice2 = 0, result = 1;  // result = 1 means return to the main menu.
@@ -63,8 +75,8 @@ int main() {
               DEPTH = MIN_DEPTH + movementMenu(menuWin, menuDifficulty, 0) - 1;
               break;
             case 2:
-              NROWS = movementMenu(menuWin, menuBoardSizeRows, 2);
-              NCOLS = movementMenu(menuWin, menuBoardSizeCols, 2);
+              NROWS = NROWS_MAX - movementMenu(menuWin, menuBoardSizeRows, 2) + 1;
+              NCOLS = NCOLS_MAX - movementMenu(menuWin, menuBoardSizeCols, 2) + 1;
               STARTBOARD_X = (COLS - (INNERSPACE_X + 1) * NCOLS + 1) / 2;
               break;
             case 3:
