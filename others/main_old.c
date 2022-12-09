@@ -1,5 +1,6 @@
 #include "../include/connect4.h"
 #include "../include/evaluation.h"
+#include "../include/extra.h"
 #include "../include/minimax.h"
 #include "../include/setup.h"
 
