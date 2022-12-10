@@ -1,4 +1,4 @@
-Games played: 50
-Games won (by the computer): 43
+Games played: 57
+Games won (by the computer): 50
 Games lost (by the computer): 4
 Games tied: 3

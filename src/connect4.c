@@ -335,6 +335,108 @@ int heuristicFunction(char** board, char currentPlayer) {
   return totalValue;
 }
 
+// int heuristicFunction(char** board, char currentPlayer) {
+//   char **strings = malloc(4 * sizeof(char*)), playerTile;
+//   int totalValue = 0, values[4];  // defenseMode: the higher, the more defensive is the computer.
+//   int zeroRow1, zeroRow2, zeroCol1, zeroCol2;
+//   for (int col = 0; col < NCOLS; col++) {
+//     for (int row = computeRow(board, col) + 1; row < NROWS; row++) {  // avoid cases where the last tile is empty.
+//       playerTile = board[row][col];
+
+//       // for (int i = 0; i < 4; i++) {
+//       //   // we investigate the neighbourhood of the tile in [row,col]. If we do obtain a '0' or the same tile as playerTile, we omit extracting the string, because it is irrelevant for the global mark.
+//       //   // i = 2 | i = 1  | x
+//       //   // --------------------
+//       //   // i = 0 | playerTile | x
+//       //   // --------------------
+//       //   // i = 3 |   x    | x
+//       //   switch (i) {
+//       //     case 0:
+//       //       if (isSameTileOnTheLeft(board, row, col))
+//       //         strings[0] = NULL;
+//       //       else
+//       //         strings[0] = consecutiveW_E(board, row, col);  // horizontal string
+//       //       break;
+//       //     case 1:
+//       //       if (isSameTileAbove(board, row, col)) {
+//       //         // printf("I'm here TOP\n");
+//       //         strings[1] = NULL;
+//       //       } else
+//       //         strings[1] = consecutiveN_S(board, row, col);  // vertical string
+//       //       break;
+//       //     case 2:
+//       //       if (isSameTileInTheNW(board, row, col))
+//       //         strings[2] = NULL;
+//       //       else
+//       //         strings[2] = consecutiveNW_SE(board, row, col);  // first diagonal string
+//       //       break;
+//       //     case 3:
+//       //       if (isSameTileInTheSW(board, row, col))
+//       //         strings[3] = NULL;
+//       //       else
+//       //         strings[3] = consecutiveNE_SW(board, row, col);  // second diagonal string
+//       //       break;
+//       //     default:
+//       //       break;
+//       //   }
+//       // }
+//       strings[0] = consecutiveW_E(board, row, col);    // horizontal string
+//       strings[1] = consecutiveN_S(board, row, col);    // vertical string
+//       strings[2] = consecutiveNW_SE(board, row, col);  // first diagonal string
+//       strings[3] = consecutiveNE_SW(board, row, col);  // second diagonal string
+
+//       if (playerTile == '1')
+//         for (int i = 0; i < 4; i++) values[i] = evaluateString(strings[i], '1');
+//       else  // playerTile == '2'
+//         for (int i = 0; i < 4; i++) values[i] = evaluateString(strings[i], '2');
+
+//       // Here we will distinguish the killing doubles (example 1: there is a doubleand you have nothing to do) and the avoidable doubles (example 2: there is a double but the match isn't done yet)
+//       // Examples:
+//       // 1                                2
+//       // |   |   |   |   |   |            |   |   |   |   |   |
+//       // |   |   | o | o |   |            |   | x | x | x |   |
+//       // |   | x | x | x |   |            |   | o | x | o |   |
+//       for (int i = 0; i < 4; i++) {
+//         zeroRow1 = row;  // row of the first zero in the doubles
+//         zeroRow2 = row;  // row of the second zero in the doubles
+//         zeroCol1 = col;  // column of the first zero in the doubles
+//         zeroCol2 = col;  // column of the second zero in the doubles
+//         if (values[i] == 2 * GOODONE_VALUE) {
+//           getFirstLeftClosestZeroInGOODONE_VALUE(board, i, &zeroRow1, &zeroCol1);
+//           getFirstRightClosestZeroInGOODONE_VALUE(board, i, &zeroRow2, &zeroCol2);
+//           if (!((insideLimits(zeroRow1 + 1, zeroCol1) && board[zeroRow1 + 1][zeroCol1] == '0') || (insideLimits(zeroRow2 + 1, zeroCol2) && board[zeroRow2 + 1][zeroCol2] == '0')))
+//             values[i] = INF;
+//         } else if (values[i] == GOODONE_VALUE) {
+//           getFirstLeftClosestZeroInGOODONE_VALUE(board, i, &zeroRow1, &zeroCol1);
+//           if (zeroRow1 == row && zeroCol1 == col)
+//             getFirstRightClosestZeroInGOODONE_VALUE(board, i, &zeroRow1, &zeroCol1);
+//           // Now, zeroRow1 and zeroCol1 contain the position of the 0 avoiding the 4-in-a-row.
+//           if (!(insideLimits(zeroRow1 + 1, zeroCol1) && board[zeroRow1 + 1][zeroCol1] == '0') && playerTile != currentPlayer)
+//             values[i] = INF;
+//         }
+//       }
+//       // if (board[row][col] == '1')  // computer
+//       //   totalValue += (evaluateString(h, '1') + evaluateString(v, '1') + evaluateString(d1, '1') + evaluateString(d2, '1'));
+//       // else  // if board[row][col] == '2' // player
+//       //   totalValue -= defenseMode * (evaluateString(h, '2') + evaluateString(v, '2') + evaluateString(d1, '2') + evaluateString(d2, '2'));
+//       // printf("player: %c\n", player_comp);
+//       // printf("h = %s\nv = %s\nd1 = %s\nd2 = %s\n", h, v, d1, d2);
+//       if (playerTile == '1')  // computer
+//         totalValue += sum(values, 4);
+//       else if (playerTile == '2')  // if board[row][col] == '2' // player
+//         totalValue -= sum(values, 4);
+//       // for (int i = 0; i < 4; i++) printf("value %i: %i\n", i, values[i]);
+//       // if (playerTile == '1')  // computer
+//       //   printf("value intermezzo: %i\n", sum(values, 4));
+//       // else
+//       //   printf("value intermezzo: %i\n", -sum(values, 4));
+//     }
+//   }
+//   free(strings);
+//   // printf("Heuristic function: %i\n", totalValue);
+//   return totalValue;
+// }
+
 int insideLimits(int row, int col) {  // Returns 0 if, the position (row, col) is outside limits of the board and 1 otherwise
   return (row < 0 || row >= NROWS || col < 0 || col >= NCOLS) ? 0 : 1;
 }
@@ -396,9 +498,9 @@ char playGame() {  // do the match. Returns if there is a draw, 1 if the compute
   clear();
   refresh();
 
-  char** board = malloc(NROWS * sizeof(char*));
+  char** board = (char**)malloc(NROWS * sizeof(char*));
   for (int i = 0; i < NROWS; i++) {
-    board[i] = malloc(NCOLS * sizeof(char));
+    board[i] = (char*)malloc(NCOLS * sizeof(char));
     memset(board[i], '0', NCOLS);
   }
   int choice, startCol = 0, startRow = 0;  // startCol is the number of the col where we have done the 4-in-a-Row (if we did). And same with startRow.

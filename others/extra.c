@@ -25,7 +25,10 @@ char playGame2() {  // do the match. Returns if there is a draw, 1 if the comput
       scanf("%i", &choice);
       choice--;
     } else {  // computer's turn
+      clock_t begin = clock();
       choice = computerPlay(board);
+      clock_t end = clock();
+      printf("Time: %lf\n", (double)(end - begin) / CLOCKS_PER_SEC);
     }
     if (choice < 0 || choice >= NCOLS || board[0][choice] != '0') {
       printf("The column enter is not valid! Play again.\n");
