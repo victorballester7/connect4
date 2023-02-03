@@ -42,7 +42,8 @@ char playGame2() {  // do the match. Returns if there is a draw, 1 if the comput
     }
     lastPlayer = otherPlayer(lastPlayer);
   }
-
+  for (int i = 0; i < NROWS; i++) free(board[i]);
+  free(board);
   return '0';
 }
 char whoStarts() {

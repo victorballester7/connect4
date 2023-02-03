@@ -1,0 +1,1037 @@
+   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   |   | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+| ● | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (7,0)value 0: -2500
+position: (7,0)value 1: 100
+position: (7,0)value 2: -2500
+position: (7,0)value 3: -2500
+value intermezzo: 7400
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99995100
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1007600
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 400
+value intermezzo: -700
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 100997600
+position: (5,3)value 0: 100
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 997700
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: 200
+position: (3,4)value 3: 100000000
+value intermezzo: 100007700
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 2007500
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 100
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -997800
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 995200
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+1 - 302059700
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   | ● |   | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (5,1)value 0: -2500
+position: (5,1)value 1: 100
+position: (5,1)value 2: -2500
+position: (5,1)value 3: 20000
+value intermezzo: -15100
+position: (6,1)value 0: -2500
+position: (6,1)value 1: -2500
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99992500
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: -2500
+position: (6,2)value 3: 1000000
+value intermezzo: 995100
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 20000
+value intermezzo: -20300
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 100997600
+position: (5,3)value 0: -2500
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 995100
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: -2500
+position: (7,3)value 3: -2500
+value intermezzo: -10000
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: 200
+position: (3,4)value 3: 100000000
+value intermezzo: 100007700
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 2007500
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 100
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -997800
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 995200
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+2 - 301987400
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   | ● | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: -2500
+value intermezzo: -7400
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (5,2)value 0: -2500
+position: (5,2)value 1: 100
+position: (5,2)value 2: 10000
+position: (5,2)value 3: -2500
+value intermezzo: -5100
+position: (6,2)value 0: -2500
+position: (6,2)value 1: -2500
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1005000
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 400
+value intermezzo: -700
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 10000
+value intermezzo: 1007600
+position: (5,3)value 0: -2500
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 995100
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 10000
+position: (6,3)value 3: 1000000
+value intermezzo: -1005000
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: 200
+position: (3,4)value 3: 10000
+value intermezzo: 17700
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 2007500
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 100
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -997800
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 995200
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+3 - 2049600
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   | ● |   |   |   |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   |   | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99995100
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1007600
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (2,3)value 0: 400
+position: (2,3)value 1: 10000
+position: (2,3)value 2: -2500
+position: (2,3)value 3: 300
+value intermezzo: -8200
+position: (3,3)value 0: 100
+position: (3,3)value 1: 10000
+position: (3,3)value 2: 100
+position: (3,3)value 3: 400
+value intermezzo: -10600
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 100997600
+position: (5,3)value 0: 100
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 997700
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: -2500
+position: (3,4)value 3: 100000000
+value intermezzo: 100005000
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 2007500
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 100
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -997800
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 995200
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+4 - 302031500
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   | ● |   |   |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   |   | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99995100
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1007600
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 30000
+value intermezzo: -30300
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 100997600
+position: (5,3)value 0: 100
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 997700
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (2,4)value 0: 400
+position: (2,4)value 1: -2500
+position: (2,4)value 2: 100
+position: (2,4)value 3: 30000
+value intermezzo: -28000
+position: (3,4)value 0: -2500
+position: (3,4)value 1: -2500
+position: (3,4)value 2: 200
+position: (3,4)value 3: 100000000
+value intermezzo: 99995200
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: -2500
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 1995000
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 100
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -997800
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: -2500
+position: (4,6)value 3: -2500
+value intermezzo: 992500
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+7 - 301967000
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   |   | x | ● | ● | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99995100
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1007600
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 400
+value intermezzo: -700
+position: (4,3)value 0: 100000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 199997600
+position: (5,3)value 0: 100
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 997700
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: 200
+position: (3,4)value 3: 100000000
+value intermezzo: 100007700
+position: (4,4)value 0: 100000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 101007500
+position: (5,4)value 0: 1000000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1995000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (5,5)value 0: 1000000
+position: (5,5)value 1: 100
+position: (5,5)value 2: -2500
+position: (5,5)value 3: -2500
+value intermezzo: -995100
+position: (6,5)value 0: -2500
+position: (6,5)value 1: -2500
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: -10000
+position: (7,5)value 0: -2500
+position: (7,5)value 1: -2500
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: -10000
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 100
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -997800
+position: (4,6)value 0: 100000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 99995200
+position: (5,6)value 0: 1000000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -992500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+5 - 596052200
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   | ● |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   |   | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● |   |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99995100
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1007600
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 400
+value intermezzo: -700
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 100997600
+position: (5,3)value 0: 100
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 997700
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: 200
+position: (3,4)value 3: 100000000
+value intermezzo: 100007700
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 2007500
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (2,6)value 0: 200
+position: (2,6)value 1: 10000
+position: (2,6)value 2: 100
+position: (2,6)value 3: -2500
+value intermezzo: -7800
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 10000
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -1007700
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 995200
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+6 - 302034600
+-   -   -   -   -   -   -   -   -
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   |   |   |
+---------------------------------
+|   |   |   |   |   |   | ● |   |
+---------------------------------
+|   |   |   | ● | x |   | ● |   |
+---------------------------------
+|   |   |   | x | x |   | x |   |
+---------------------------------
+|   |   |   | x | ● |   | ● |   |
+---------------------------------
+|   | x | x | ● | ● | x | ● |   |
+---------------------------------
+|   | ● | ● | x | x | x | ● | ● |
+---------------------------------
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+position: (6,1)value 0: -2500
+position: (6,1)value 1: 100
+position: (6,1)value 2: -2500
+position: (6,1)value 3: 100000000
+value intermezzo: 99995100
+position: (7,1)value 0: -2500
+position: (7,1)value 1: -2500
+position: (7,1)value 2: -2500
+position: (7,1)value 3: -2500
+value intermezzo: 10000
+position: (6,2)value 0: -2500
+position: (6,2)value 1: 100
+position: (6,2)value 2: 10000
+position: (6,2)value 3: 1000000
+value intermezzo: 1007600
+position: (7,2)value 0: -2500
+position: (7,2)value 1: -2500
+position: (7,2)value 2: -2500
+position: (7,2)value 3: 1000000
+value intermezzo: -992500
+position: (3,3)value 0: 100
+position: (3,3)value 1: 100
+position: (3,3)value 2: 100
+position: (3,3)value 3: 400
+value intermezzo: -700
+position: (4,3)value 0: 1000000
+position: (4,3)value 1: -2500
+position: (4,3)value 2: 100
+position: (4,3)value 3: 100000000
+value intermezzo: 100997600
+position: (5,3)value 0: 100
+position: (5,3)value 1: -2500
+position: (5,3)value 2: 100
+position: (5,3)value 3: 1000000
+value intermezzo: 997700
+position: (6,3)value 0: -2500
+position: (6,3)value 1: -2500
+position: (6,3)value 2: 100
+position: (6,3)value 3: 1000000
+value intermezzo: -995100
+position: (7,3)value 0: -2500
+position: (7,3)value 1: -2500
+position: (7,3)value 2: 10000
+position: (7,3)value 3: -2500
+value intermezzo: 2500
+position: (3,4)value 0: -2500
+position: (3,4)value 1: 10000
+position: (3,4)value 2: 200
+position: (3,4)value 3: 100000000
+value intermezzo: 100007700
+position: (4,4)value 0: 1000000
+position: (4,4)value 1: 10000
+position: (4,4)value 2: -2500
+position: (4,4)value 3: 1000000
+value intermezzo: 2007500
+position: (5,4)value 0: 10000
+position: (5,4)value 1: -2500
+position: (5,4)value 2: -2500
+position: (5,4)value 3: 1000000
+value intermezzo: -1005000
+position: (6,4)value 0: -2500
+position: (6,4)value 1: -2500
+position: (6,4)value 2: -2500
+position: (6,4)value 3: -2500
+value intermezzo: 10000
+position: (7,4)value 0: -2500
+position: (7,4)value 1: -2500
+position: (7,4)value 2: -2500
+position: (7,4)value 3: -2500
+value intermezzo: -10000
+position: (6,5)value 0: -2500
+position: (6,5)value 1: 10000
+position: (6,5)value 2: -2500
+position: (6,5)value 3: -2500
+value intermezzo: 2500
+position: (7,5)value 0: -2500
+position: (7,5)value 1: 10000
+position: (7,5)value 2: -2500
+position: (7,5)value 3: -2500
+value intermezzo: 2500
+position: (2,6)value 0: 200
+position: (2,6)value 1: 10000
+position: (2,6)value 2: 100
+position: (2,6)value 3: -2500
+value intermezzo: -7800
+position: (3,6)value 0: -2500
+position: (3,6)value 1: 10000
+position: (3,6)value 2: 200
+position: (3,6)value 3: 1000000
+value intermezzo: -1007700
+position: (4,6)value 0: 1000000
+position: (4,6)value 1: -2500
+position: (4,6)value 2: 200
+position: (4,6)value 3: -2500
+value intermezzo: 995200
+position: (5,6)value 0: 10000
+position: (5,6)value 1: -2500
+position: (5,6)value 2: -2500
+position: (5,6)value 3: -2500
+value intermezzo: -2500
+position: (6,6)value 0: -2500
+position: (6,6)value 1: -2500
+position: (6,6)value 2: -2500
+position: (6,6)value 3: -2500
+value intermezzo: 10000
+position: (7,6)value 0: -2500
+position: (7,6)value 1: -2500
+position: (7,6)value 2: -2500
+position: (7,6)value 3: -2500
+value intermezzo: 10000
+position: (7,7)value 0: -2500
+position: (7,7)value 1: 100
+position: (7,7)value 2: -2500
+position: (7,7)value 3: -2500
+value intermezzo: 7400
+8 - 302042000

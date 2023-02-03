@@ -1,3 +1,6 @@
 Bad match (I start, 6 * 7, level 6):
 4533456345411356
 4625661365413112!!!
+
+
+Estava mirant el coefficient de defencivitat. Ha d'estar en un entorn de 1.5.

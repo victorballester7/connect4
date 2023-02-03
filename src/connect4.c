@@ -149,39 +149,58 @@ void getFirstLeftClosestZeroInGOODONE_VALUE(char** board, int direction, int* ze
   // direction = 1 --> vertical
   // direction = 2 --> NW - SE diagonal
   // direction = 3 --> SW - NE diagonal
+  char player = board[row][col];
+  char otherplayer = otherPlayer(player);
+  char *h, *v, *d1, *d2;
   if (direction == 0) {
     while (insideLimits(row, col - j)) {
-      if (board[row][col - j] == '0') {
+      if (board[row][col - j] == otherplayer)
+        return;
+      else if (board[row][col - j] == '0') {
+        h = consecutiveW_E(board, row, col - j);
+        if (evaluateString(h, player) != INF) return;
         *zeroRow = row;
         *zeroCol = col - j;
-        break;
+        return;
       }
       j++;
     }
   } else if (direction == 1) {
     while (insideLimits(row - j, col)) {
-      if (board[row - j][col] == '0') {
+      if (board[row - j][col] == otherplayer)
+        return;
+      else if (board[row - j][col] == '0') {
+        v = consecutiveN_S(board, row - j, col);
+        if (evaluateString(v, player) != INF) return;
         *zeroRow = row - j;
         *zeroCol = col;
-        break;
+        return;
       }
       j++;
     }
   } else if (direction == 2) {
     while (insideLimits(row - j, col - j)) {
-      if (board[row - j][col - j] == '0') {
+      if (board[row - j][col - j] == otherplayer)
+        return;
+      else if (board[row - j][col - j] == '0') {
+        d1 = consecutiveNW_SE(board, row - j, col - j);
+        if (evaluateString(d1, player) != INF) return;
         *zeroRow = row - j;
         *zeroCol = col - j;
-        break;
+        return;
       }
       j++;
     }
   } else if (direction == 3) {
     while (insideLimits(row + j, col - j)) {
-      if (board[row + j][col - j] == '0') {
+      if (board[row + j][col - j] == otherplayer)
+        return;
+      else if (board[row + j][col - j] == '0') {
+        d2 = consecutiveNE_SW(board, row + j, col - j);
+        if (evaluateString(d2, player) != INF) return;
         *zeroRow = row + j;
         *zeroCol = col - j;
-        break;
+        return;
       }
       j++;
     }
@@ -194,39 +213,58 @@ void getFirstRightClosestZeroInGOODONE_VALUE(char** board, int direction, int* z
   // direction = 1 --> vertical
   // direction = 2 --> NW - SE diagonal
   // direction = 3 --> SW - NE diagonal
+  char player = board[row][col];
+  char otherplayer = otherPlayer(player);
+  char *h, *v, *d1, *d2;
   if (direction == 0) {
     while (insideLimits(row, col + j)) {
-      if (board[row][col + j] == '0') {
+      if (board[row][col + j] == otherplayer)
+        return;
+      else if (board[row][col + j] == '0') {
+        h = consecutiveW_E(board, row, col + j);
+        if (evaluateString(h, player) != INF) return;
         *zeroRow = row;
         *zeroCol = col + j;
-        break;
+        return;
       }
       j++;
     }
   } else if (direction == 1) {
     while (insideLimits(row + j, col)) {
-      if (board[row + j][col] == '0') {
+      if (board[row + j][col] == otherplayer)
+        return;
+      else if (board[row + j][col] == '0') {
+        v = consecutiveN_S(board, row + j, col);
+        if (evaluateString(v, player) != INF) return;
         *zeroRow = row + j;
         *zeroCol = col;
-        break;
+        return;
       }
       j++;
     }
   } else if (direction == 2) {
     while (insideLimits(row + j, col + j)) {
-      if (board[row + j][col + j] == '0') {
+      if (board[row + j][col + j] == otherplayer)
+        return;
+      else if (board[row + j][col + j] == '0') {
+        d1 = consecutiveNW_SE(board, row + j, col + j);
+        if (evaluateString(d1, player) != INF) return;
         *zeroRow = row + j;
         *zeroCol = col + j;
-        break;
+        return;
       }
       j++;
     }
   } else if (direction == 3) {
     while (insideLimits(row - j, col + j)) {
-      if (board[row - j][col + j] == '0') {
+      if (board[row - j][col + j] == otherplayer)
+        return;
+      else if (board[row - j][col + j] == '0') {
+        d2 = consecutiveNE_SW(board, row - j, col + j);
+        if (evaluateString(d2, player) != INF) return;
         *zeroRow = row - j;
         *zeroCol = col + j;
-        break;
+        return;
       }
       j++;
     }
@@ -241,43 +279,6 @@ int heuristicFunction(char** board, char currentPlayer) {
     for (int row = computeRow(board, col) + 1; row < NROWS; row++) {  // avoid cases where the last tile is empty.
       playerTile = board[row][col];
 
-      // for (int i = 0; i < 4; i++) {
-      //   // we investigate the neighbourhood of the tile in [row,col]. If we do obtain a '0' or the same tile as playerTile, we omit extracting the string, because it is irrelevant for the global mark.
-      //   // i = 2 | i = 1  | x
-      //   // --------------------
-      //   // i = 0 | playerTile | x
-      //   // --------------------
-      //   // i = 3 |   x    | x
-      //   switch (i) {
-      //     case 0:
-      //       if (isSameTileOnTheLeft(board, row, col))
-      //         strings[0] = NULL;
-      //       else
-      //         strings[0] = consecutiveW_E(board, row, col);  // horizontal string
-      //       break;
-      //     case 1:
-      //       if (isSameTileAbove(board, row, col)) {
-      //         // printf("I'm here TOP\n");
-      //         strings[1] = NULL;
-      //       } else
-      //         strings[1] = consecutiveN_S(board, row, col);  // vertical string
-      //       break;
-      //     case 2:
-      //       if (isSameTileInTheNW(board, row, col))
-      //         strings[2] = NULL;
-      //       else
-      //         strings[2] = consecutiveNW_SE(board, row, col);  // first diagonal string
-      //       break;
-      //     case 3:
-      //       if (isSameTileInTheSW(board, row, col))
-      //         strings[3] = NULL;
-      //       else
-      //         strings[3] = consecutiveNE_SW(board, row, col);  // second diagonal string
-      //       break;
-      //     default:
-      //       break;
-      //   }
-      // }
       strings[0] = consecutiveW_E(board, row, col);    // horizontal string
       strings[1] = consecutiveN_S(board, row, col);    // vertical string
       strings[2] = consecutiveNW_SE(board, row, col);  // first diagonal string
@@ -313,17 +314,11 @@ int heuristicFunction(char** board, char currentPlayer) {
             values[i] = INF;
         }
       }
-      // if (board[row][col] == '1')  // computer
-      //   totalValue += (evaluateString(h, '1') + evaluateString(v, '1') + evaluateString(d1, '1') + evaluateString(d2, '1'));
-      // else  // if board[row][col] == '2' // player
-      //   totalValue -= defenseMode * (evaluateString(h, '2') + evaluateString(v, '2') + evaluateString(d1, '2') + evaluateString(d2, '2'));
-      // printf("player: %c\n", player_comp);
-      // printf("h = %s\nv = %s\nd1 = %s\nd2 = %s\n", h, v, d1, d2);
       if (playerTile == '1')  // computer
         totalValue += sum(values, 4);
       else if (playerTile == '2')  // if board[row][col] == '2' // player
         totalValue -= sum(values, 4);
-      // for (int i = 0; i < 4; i++) printf("value %i: %i\n", i, values[i]);
+      // for (int i = 0; i < 4; i++) printf("position: (%i,%i)value %i: %i\n", row, col, i, values[i]);
       // if (playerTile == '1')  // computer
       //   printf("value intermezzo: %i\n", sum(values, 4));
       // else
@@ -511,7 +506,7 @@ char playGame() {  // do the match. Returns if there is a draw, 1 if the compute
   clearLine(2);  // If not clear it, a "No" appears there.
   LAST_CHOICE = NCOLS / 2 + 1;
   while (!isFull(board)) {
-    clearFirst2Lines();
+    clearFirst3Lines();
     if (lastPlayer == '2') {  // player's turn
       mvprintw(0, 0, "Where do you want to play? Use arrow keys to go left and right. Press enter to select a choice.");
       refresh();
@@ -531,7 +526,7 @@ char playGame() {  // do the match. Returns if there is a draw, 1 if the compute
     }
     addTile(board, choice, lastPlayer);
     if (is4InRow(board, choice)) {
-      clearFirst2Lines();
+      clearFirst3Lines();
       refresh();
       winner = lastPlayer;
       startCol = choice;
@@ -541,8 +536,7 @@ char playGame() {  // do the match. Returns if there is a draw, 1 if the compute
     }
     lastPlayer = otherPlayer(lastPlayer);
   }
-  for (int i = 0; i < NROWS; i++)
-    free(board[i]);
+  for (int i = 0; i < NROWS; i++) free(board[i]);
   free(board);
   return endOfMatch(winner, startRow, startCol, direction);
 }

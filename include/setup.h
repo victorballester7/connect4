@@ -29,7 +29,7 @@
 #define BLINKING_INTERVAL 400000  // in microseconds
 #define BLINKING_TIMES 5
 #define ANIMATION_INTERVAL 25000  // in microseconds
-#define MIN_DEPTH 3               // minimum depth that the algorithm will play in practice
+#define MIN_DEPTH 4               // minimum depth that the algorithm will play in practice
 
 /// @brief Function to make the blinking of the 4-in-a-row when you win or lose the game.
 /// @param startRow Row where the 4-in-a-row starts.
@@ -39,7 +39,7 @@
 void blinking(int startRow, int startCol, char direction, int color);
 
 /// @brief Clears the first two lines of the screen.
-void clearFirst2Lines();
+void clearFirst3Lines();
 
 /// @brief Clears the n-th line of the screen.
 /// @param n number of the line to be cleared.

@@ -317,8 +317,8 @@ void preparation(int dsq, int zero, int one, int goodOne) {
   //   s = exchangeOnesAndTwos(base10to3(i));
   //   printf("%s %d\n", s, evaluateNumber(s, dsq, zero, one, goodOne));
   // }
-  // char s[6] = "011000";
-  // printf("%s %d\n", s, evaluateNumber(s, dsq, zero, one, goodOne));
+  // // char s[6] = "011000";
+  // // printf("%s %d\n", s, evaluateNumber(s, dsq, zero, one, goodOne));
   printf("Normal one:\n");
   for (int i = 0; i < 729; i++) {
     s = base10to3(i);

@@ -72,7 +72,7 @@ int main() {
         while ((choice2 = movementMenu(menuWin, menuSettings, 0)) != 4) {
           switch (choice2) {
             case 1:
-              DEPTH = MIN_DEPTH + movementMenu(menuWin, menuDifficulty, 0) - 1;
+              DEPTH = MIN_DEPTH + 2 * (movementMenu(menuWin, menuDifficulty, 0) - 1);
               break;
             case 2:
               NROWS = NROWS_MAX - movementMenu(menuWin, menuBoardSizeRows, 2) + 1;

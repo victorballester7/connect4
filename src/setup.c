@@ -48,9 +48,8 @@ void blinking(int startRow, int startCol, char direction, int color) {
   }
 }
 
-void clearFirst2Lines() {
-  clearLine(0);
-  clearLine(1);
+void clearFirst3Lines() {
+  for (int i = 0; i < 3; i++) clearLine(i);
 }
 
 void clearLine(int n) {
@@ -178,7 +177,7 @@ char* getDifficulty() {
   int n_choices, startX, startY;
   char** choices = menuDifficulty(NULL, &n_choices, &startX, &startY);
 
-  return choices[DEPTH - MIN_DEPTH];
+  return choices[(DEPTH - MIN_DEPTH) / 2];
 }
 
 char* getNameSize() {
@@ -362,7 +361,7 @@ char** menuStats(WINDOW* menu_win, int* n_choices, int* startX, int* startY) {
   char filename[30] = "data/statistics.txt";
   FILE* fp = fopen(filename, "r");
   if (fp == NULL) {
-    clearFirst2Lines();
+    clearFirst3Lines();
     attron(COLOR_PAIR(9));
     mvprintw(0, 0, "Error opening the file. The statistics cannot be shown properly. Press Enter to continue.");
     attroff(COLOR_PAIR(9));
@@ -610,7 +609,7 @@ int supportsColors() {
 }
 
 void topRowComment() {
-  clearFirst2Lines();
+  clearFirst3Lines();
   mvprintw(0, 0, "Use arrow keys to go up and down. Press enter to select a choice.");  // printf in the abstract window
   refresh();                                                                            // Print it on to the real screen
 }
