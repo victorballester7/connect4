@@ -18,7 +18,7 @@ int main() {
   int MIN_TERMINAL_WIDTH;
   int MIN_TERMINAL_HEIGHT;
   setMinDimensions(&MIN_TERMINAL_WIDTH, &MIN_TERMINAL_HEIGHT);
-  char filenameLogo[30] = "resources/logo.txt";
+  char filenameLogo[30] = "assets/logo.txt";
 
   // position of the top left corner of the window
   int startRow = (31 - WIN_HEIGHT) / 2;
