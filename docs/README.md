@@ -36,7 +36,7 @@ gcc -Wall -pedantic -std=c99 -o bin/main src/*.c -lncurses
 ### Gallery of photos of the game
 
 ![Main menu](../assets/img/mainmenu.png?raw=true "Main menu")
+![Colors settings menu](../assets/img/settings_colors.png?raw=true "Color settings menu")
 ![Match](../assets/img/match.png?raw=true "Match")
 ![Match with colors](../assets/img/connect4-green-blue.png?raw=true "Match with colors")
 ![Ending of a match](../assets/img/match_ended.png?raw=true "Ending of a match")
-![Colors settings menu](../assets/img/settings_colors.png?raw=true "Color settings menu")
